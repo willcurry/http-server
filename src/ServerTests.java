@@ -12,17 +12,17 @@ public class ServerTests {
     StringWriter out;
     PrintWriter output;
 
-    @Before
-    public void Before() {
-        input = new BufferedReader(new StringReader("hello"));
+    public void before(String request) {
+        input = new BufferedReader(new StringReader(request));
         out = new StringWriter();
         output = new PrintWriter(out, true);
         server = new Server(input, output);
     }
 
     @Test
-    public void ResponseIsStatus200WhenSimpleGET() throws IOException {
+    public void responseIsStatus200WhenSimpleGET() throws IOException {
+        before("GET / HTTP/1.1");
         server.run();
-        assertThat(out.toString().contains("hello"), is(true));
+        assertThat(out.toString(), is("HTTP/1.1 200 OK\n"));
     }
 }

@@ -8,14 +8,17 @@ import java.net.Socket;
 public class Server {
     BufferedReader input;
     PrintWriter output;
+    RequestParser requestParser;
 
     public Server(BufferedReader input, PrintWriter output) {
         this.input = input;
         this.output = output;
+        requestParser = new RequestParser();
     }
 
     public void run() throws IOException {
-        output.println(input.readLine());
+        String response = requestParser.parse(input.readLine()).get("version") + " " + 200 + " OK";
+        output.println(response);
     }
 
     public static void main(String[] args) throws IOException {
