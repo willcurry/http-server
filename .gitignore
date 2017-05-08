@@ -69,3 +69,6 @@ fabric.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+.idea/
+META-INF/
