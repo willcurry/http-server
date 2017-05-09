@@ -46,4 +46,11 @@ public class ServerTests {
         server.run();
         assertThat(out.toString(), is("HTTP/1.1 404 Not Found\n"));
     }
+
+    @Test
+    public void responseIsStatus404WhenHeadRequestOnUnknownURI() throws IOException, RequestParser.InvalidRequest {
+        before("HEAD /foobar HTTP/1.1");
+        server.run();
+        assertThat(out.toString(), is("HTTP/1.1 404 Not Found\n"));
+    }
 }

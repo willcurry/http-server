@@ -4,31 +4,22 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Server {
     BufferedReader input;
     PrintWriter output;
     RequestParser requestParser;
+    ResponseFactory responseFactory;
 
     public Server(BufferedReader input, PrintWriter output) {
         this.input = input;
         this.output = output;
         requestParser = new RequestParser();
+        responseFactory = new ResponseFactory();
     }
 
     public void run() throws IOException, RequestParser.InvalidRequest {
-        Map<String, String> parsedRequest = requestParser.parse(input.readLine());
-        String response;
-        if (parsedRequest.get("uri").equals("/")) {
-            response = parsedRequest.get("version") + " " + 200 + " OK";
-        } else if (parsedRequest.get("uri").equals("/form")) {
-            response = parsedRequest.get("version") + " " + 200 + " OK";
-        } else {
-            response = parsedRequest.get("version") + " " + 404 + " Not Found";
-        }
-        output.println(response);
+        output.println(responseFactory.get(requestParser.parse(input.readLine())));
     }
 
     public static void main(String[] args) throws IOException, RequestParser.InvalidRequest {
