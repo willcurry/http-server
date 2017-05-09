@@ -20,7 +20,7 @@ public class ServerTests {
     }
 
     @Test
-    public void responseIsStatus200WhenSimpleGET() throws IOException {
+    public void responseIsStatus200WhenSimpleGET() throws IOException, RequestParser.InvalidRequest {
         before("GET / HTTP/1.1");
         server.run();
         assertThat(out.toString(), is("HTTP/1.1 200 OK\n"));

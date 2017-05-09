@@ -16,16 +16,22 @@ public class Server {
         requestParser = new RequestParser();
     }
 
-    public void run() throws IOException {
-        String response = requestParser.parse(input.readLine()).get("version") + " " + 200 + " OK";
+    public void run() throws IOException, RequestParser.InvalidRequest {
+        String request = input.readLine();
+        String response = requestParser.parse(request).get("version") + " " + 200 + " OK";
         output.println(response);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, RequestParser.InvalidRequest {
         ServerSocket serverSocket = new ServerSocket(5000);
-        Socket clientSocket = serverSocket.accept();
-        BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        PrintWriter output = new PrintWriter(clientSocket.getOutputStream());
+        while (true) {
+            Socket clientSocket = serverSocket.accept();
+            BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
+            Server server = new Server(input, output);
+            server.run();
+            clientSocket.close();
+        }
     }
 }
 
