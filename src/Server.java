@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Server {
     BufferedReader input;
@@ -17,8 +19,13 @@ public class Server {
     }
 
     public void run() throws IOException, RequestParser.InvalidRequest {
-        String request = input.readLine();
-        String response = requestParser.parse(request).get("version") + " " + 200 + " OK";
+        Map<String, String> parsedRequest = requestParser.parse(input.readLine());
+        String response;
+        if (parsedRequest.get("uri").equals("/")) {
+            response = parsedRequest.get("version") + " " + 200 + " OK";
+        } else {
+            response = parsedRequest.get("version") + " " + 404 + " Not Found";
+        }
         output.println(response);
     }
 
@@ -34,4 +41,3 @@ public class Server {
         }
     }
 }
-

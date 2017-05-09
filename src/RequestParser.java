@@ -1,3 +1,5 @@
+import com.sun.tools.javac.code.Attribute;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +18,6 @@ public class RequestParser {
         parsedRequest.put("version", requestList[2]);
         return parsedRequest;
     }
-
 
     class InvalidRequest extends Exception {
 

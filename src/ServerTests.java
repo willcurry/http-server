@@ -25,4 +25,11 @@ public class ServerTests {
         server.run();
         assertThat(out.toString(), is("HTTP/1.1 200 OK\n"));
     }
+
+    @Test
+    public void responseIsStatus404WhenUnknownURI() throws IOException, RequestParser.InvalidRequest {
+        before("GET /foobar HTTP/1.1");
+        server.run();
+        assertThat(out.toString(), is("HTTP/1.1 404 Not Found\n"));
+    }
 }
