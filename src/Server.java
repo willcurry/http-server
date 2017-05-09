@@ -23,6 +23,8 @@ public class Server {
         String response;
         if (parsedRequest.get("uri").equals("/")) {
             response = parsedRequest.get("version") + " " + 200 + " OK";
+        } else if (parsedRequest.get("uri").equals("/form")) {
+            response = parsedRequest.get("version") + " " + 200 + " OK";
         } else {
             response = parsedRequest.get("version") + " " + 404 + " Not Found";
         }

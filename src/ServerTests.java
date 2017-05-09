@@ -20,8 +20,22 @@ public class ServerTests {
     }
 
     @Test
-    public void responseIsStatus200WhenSimpleGET() throws IOException, RequestParser.InvalidRequest {
+    public void responseIsStatus200WhenGET() throws IOException, RequestParser.InvalidRequest {
         before("GET / HTTP/1.1");
+        server.run();
+        assertThat(out.toString(), is("HTTP/1.1 200 OK\n"));
+    }
+
+    @Test
+    public void responseIsStatus200WhenPOST() throws IOException, RequestParser.InvalidRequest {
+        before("POST / HTTP/1.1");
+        server.run();
+        assertThat(out.toString(), is("HTTP/1.1 200 OK\n"));
+    }
+
+    @Test
+    public void responseIsStatus200WhenPUT() throws IOException, RequestParser.InvalidRequest {
+        before("POST / HTTP/1.1");
         server.run();
         assertThat(out.toString(), is("HTTP/1.1 200 OK\n"));
     }
