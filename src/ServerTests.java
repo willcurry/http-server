@@ -53,4 +53,11 @@ public class ServerTests {
         server.run();
         assertThat(out.toString(), is("HTTP/1.1 404 Not Found\n"));
     }
+
+    @Test
+    public void whenURIIsMethodOptionsTheHeaderAllowsCorrectMethods() throws IOException, RequestParser.InvalidRequest {
+        before("GET /method_options HTTP/1.1");
+        server.run();
+        assertThat(out.toString(), is("HTTP/1.1 200 OK\r\nALLOW: GET,HEAD,POST,OPTIONS,PUT\n"));
+    }
 }
