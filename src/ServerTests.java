@@ -67,4 +67,18 @@ public class ServerTests {
         server.run();
         assertThat(out.toString(), is("HTTP/1.1 200 OK\r\nALLOW: GET,OPTIONS\n"));
     }
+
+    @Test
+    public void responseIsStatus302WhenURIIsRedirect() throws IOException, RequestParser.InvalidRequest {
+        before("GET /redirect HTTP/1.1");
+        server.run();
+        assertThat(out.toString().contains("HTTP/1.1 302 Found"), is(true));
+    }
+
+    @Test
+    public void locationIsSetToHomeWhenURIIsRedirect() throws IOException, RequestParser.InvalidRequest {
+        before("GET /redirect HTTP/1.1");
+        server.run();
+        assertThat(out.toString().contains("Location: /"), is(true));
+    }
 }

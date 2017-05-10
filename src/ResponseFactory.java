@@ -18,6 +18,10 @@ public class ResponseFactory {
             response.setStatusCode(200, "OK");
             response.setHeader("ALLOW: GET,OPTIONS");
             return response.toString();
+        } else if (parsedRequest.get("uri").equals("/redirect")) {
+            response.setStatusCode(302, "Found");
+            response.setHeader("Location: /");
+            return response.toString();
         } else {
             response.setStatusCode(404, "Not Found");
             return response.toString();
