@@ -60,4 +60,11 @@ public class ServerTests {
         server.run();
         assertThat(out.toString(), is("HTTP/1.1 200 OK\r\nALLOW: GET,HEAD,POST,OPTIONS,PUT\n"));
     }
+
+    @Test
+    public void whenURIIsMethodOptions2TheHeaderAllowsCorrectMethods() throws IOException, RequestParser.InvalidRequest {
+        before("GET /method_options2 HTTP/1.1");
+        server.run();
+        assertThat(out.toString(), is("HTTP/1.1 200 OK\r\nALLOW: GET,OPTIONS\n"));
+    }
 }
