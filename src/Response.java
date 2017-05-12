@@ -2,6 +2,7 @@ public class Response {
     private String version;
     private String statusCode;
     private String header;
+    private String content;
 
     public void setHTTPVersion(String version) {
         this.version = version;
@@ -15,11 +16,19 @@ public class Response {
         this.header = header;
     }
 
-    private String header() {
-        return (header == null) ? "" : "\r\n" + header;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String toString() {
-        return this.version + " " + this.statusCode + header();
+        return this.version + " " + this.statusCode + header() + content();
+    }
+
+    private String content() {
+        return (content == null) ? "" : "\n\n" + content;
+    }
+
+    private String header() {
+        return (header == null) ? "" : "\r\n" + header;
     }
 }

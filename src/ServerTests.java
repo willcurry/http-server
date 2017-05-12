@@ -5,6 +5,7 @@ import java.io.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class ServerTests {
     Server server;
@@ -80,5 +81,12 @@ public class ServerTests {
         before("GET /redirect HTTP/1.1");
         server.run();
         assertThat(out.toString().contains("Location: /"), is(true));
+    }
+
+    @Test
+    public void whenDataIsPostedToFormTheResponseOfTheBodyContainsTheData() throws IOException, RequestParser.InvalidRequest {
+        before("POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat");
+        server.run();
+        assertTrue(out.toString().contains("data=fatcat"));
     }
 }

@@ -21,4 +21,10 @@ public class RequestParserTests {
         RequestParser requestParser = new RequestParser();
         assertThat(requestParser.parse("GET / HTTP/1.1").get("uri"), is("/"));
     }
+
+    @Test
+    public void knowsTheBodyOfARequest() throws RequestParser.InvalidRequest {
+        RequestParser requestParser = new RequestParser();
+        assertThat(requestParser.parse("POST /form HTTP/1.1\n\ndata=fatcat").get("body"), is("data=fatcat"));
+    }
 }

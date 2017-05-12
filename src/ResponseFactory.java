@@ -9,6 +9,9 @@ public class ResponseFactory {
             return response.toString();
         } else if (parsedRequest.get("uri").equals("/form")) {
             response.setStatusCode(200, "OK");
+            if (!parsedRequest.get("body").equals("")) {
+                response.setContent(parsedRequest.get("body"));
+            }
             return response.toString();
         } else if (parsedRequest.get("uri").equals("/method_options")) {
             response.setStatusCode(200, "OK");
