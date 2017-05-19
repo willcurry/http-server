@@ -7,4 +7,9 @@ public class MethodOptions implements Request {
         response.setHeader("ALLOW: GET,HEAD,POST,OPTIONS,PUT");
         return response;
     }
+
+    @Override
+    public Boolean appliesTo(String uri) {
+        return uri.equals("/method_options");
+    }
 }

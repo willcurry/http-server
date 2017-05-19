@@ -7,4 +7,9 @@ public class Redirect implements Request {
         response.setHeader("Location: /");
         return response;
     }
+
+    @Override
+    public Boolean appliesTo(String uri) {
+        return uri.equals("/redirect");
+    }
 }

@@ -6,4 +6,9 @@ public class DefaultPage implements  Request {
         response.setStatusCode(200, "OK");
         return response;
     }
+
+    @Override
+    public Boolean appliesTo(String uri) {
+        return uri.equals("/");
+    }
 }
