@@ -11,13 +11,13 @@ public class Server {
     BufferedReader input;
     PrintWriter output;
     RequestParser requestParser;
-    ResponseFactory responseFactory;
+    Handler handler;
 
     public Server(BufferedReader input, PrintWriter output) {
         this.input = input;
         this.output = output;
         requestParser = new RequestParser();
-        responseFactory = new ResponseFactory();
+        handler = new Handler();
     }
 
     public void run() throws IOException, RequestParser.InvalidRequest {
@@ -28,7 +28,8 @@ public class Server {
             buffer.append(line + "\n");
         }
         buffer.append(getBody(buffer.toString()));
-        output.println(responseFactory.get(requestParser.parse(buffer.toString())));
+        Response response = handler.handle(requestParser.parse(buffer.toString())).getResponse();
+        output.println(response.toString());
     }
 
     private String contentLength(String header) {

@@ -1,7 +1,4 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RequestParser {
@@ -16,7 +13,6 @@ public class RequestParser {
         parsedRequest.put("type", requestList[0]);
         parsedRequest.put("uri", requestList[1]);
         parsedRequest.put("version", requestList[2]);
-        String body = getBody(request);
         parsedRequest.put("body", getBody(request));
         return parsedRequest;
     }
