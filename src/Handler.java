@@ -16,7 +16,7 @@ public class Handler {
     public Request handle(Map<String, String> parsedRequest) {
         for (Request request : requests) {
             if (request.appliesTo(parsedRequest.get("uri"))) {
-                return request;
+                return request.withData(parsedRequest);
             }
         }
         return new FourOhFour();

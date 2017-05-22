@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Redirect implements Request {
     @Override
     public Response getResponse() {
@@ -11,5 +13,10 @@ public class Redirect implements Request {
     @Override
     public Boolean appliesTo(String uri) {
         return uri.equals("/redirect");
+    }
+
+    @Override
+    public Request withData(Map<String, String> data) {
+        return this;
     }
 }

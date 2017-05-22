@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class DefaultPage implements  Request {
     @Override
     public Response getResponse() {
@@ -10,5 +12,10 @@ public class DefaultPage implements  Request {
     @Override
     public Boolean appliesTo(String uri) {
         return uri.equals("/");
+    }
+
+    @Override
+    public Request withData(Map<String, String> data) {
+        return this;
     }
 }

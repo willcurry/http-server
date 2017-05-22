@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,14 +19,18 @@ public class Server {
 
     public void run() throws IOException, RequestParser.InvalidRequest {
         StringBuilder buffer = new StringBuilder();
-        String line;
-        while ((line = input.readLine()) != null) {
-            if (line.equals("")) break;
-            buffer.append(line + "\n");
+        int line;
+        while ((line = input.read()) != -1) {
+            buffer.append((char) line);
+            if (buffer.length() >= 4) {
+                if (buffer.substring(buffer.length() - 4).equals("\r\n\r\n")) break;
+            }
         }
         buffer.append(getBody(buffer.toString()));
         Response response = handler.handle(requestParser.parse(buffer.toString())).getResponse();
-        output.println(response.toString());
+        System.out.println(response.toString());
+        output.print(response.toString());
+        output.flush();
     }
 
     private String contentLength(String header) {
@@ -49,15 +50,4 @@ public class Server {
         return "";
     }
 
-    public static void main(String[] args) throws IOException, RequestParser.InvalidRequest {
-        ServerSocket serverSocket = new ServerSocket(5000);
-        while (true) {
-            Socket clientSocket = serverSocket.accept();
-            BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
-            Server server = new Server(input, output);
-            server.run();
-            clientSocket.close();
-        }
-    }
 }

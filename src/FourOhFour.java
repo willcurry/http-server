@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class FourOhFour implements Request {
     public Response getResponse() {
         Response response = new Response();
@@ -9,5 +11,10 @@ public class FourOhFour implements Request {
     @Override
     public Boolean appliesTo(String uri) {
         return false;
+    }
+
+    @Override
+    public Request withData(Map<String, String> data) {
+        return this;
     }
 }

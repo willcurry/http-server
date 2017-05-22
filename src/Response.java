@@ -25,10 +25,10 @@ public class Response {
     }
 
     private String content() {
-        return (content == null) ? "" : "\nContent-Length: " + content.length() + "\n" + content;
+        return (content == null) ? "" : "\n" + content;
     }
 
     private String header() {
-        return (header == null) ? "" : "\r\n" + header;
+        return (header == null) ? "" : "\n" + header + "\n";
     }
 }

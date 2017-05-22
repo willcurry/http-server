@@ -7,7 +7,7 @@ public class RequestParserTests {
     @Test
     public void knowsTheMethodAfterParsing() throws RequestParser.InvalidRequest {
         RequestParser requestParser = new RequestParser();
-        assertThat(requestParser.parse("GET / HTTP/1.1").get("type"), is("GET"));
+        assertThat(requestParser.parse("GET / HTTP/1.1").get("verb"), is("GET"));
     }
 
     @Test

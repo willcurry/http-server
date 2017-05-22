@@ -10,7 +10,7 @@ public class RequestParser {
             throw new InvalidRequest();
         }
 
-        parsedRequest.put("type", requestList[0]);
+        parsedRequest.put("verb", requestList[0]);
         parsedRequest.put("uri", requestList[1]);
         parsedRequest.put("version", requestList[2]);
         parsedRequest.put("body", getBody(request));
