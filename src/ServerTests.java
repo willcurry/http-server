@@ -5,7 +5,6 @@ import java.io.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class ServerTests {
     Server server;
@@ -85,13 +84,9 @@ public class ServerTests {
 
     @Test
     public void whenDataIsPostedToFormTheResponseOfTheBodyContainsTheData() throws IOException, RequestParser.InvalidRequest {
-        input = new BufferedReader(new StringReader("POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat"));
+        String[] fakeInputs = {"POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat\r\n\r\n", "GET /form HTTP/1.1\r\n\r\n"};
         out = new StringWriter();
-        output = new PrintWriter(out, true);
-        server = new Server(input, output);
-        server.run();
-        server.input = new BufferedReader(new StringReader("GET /form HTTP/1.1"));
-        server.run();
+        MainMock.main(fakeInputs, out);
         assertThat(out.toString(), containsString("data=fatcat"));
     }
 }
