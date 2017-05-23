@@ -2,21 +2,21 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Handler {
-    private ArrayList<Request> requests;
+    private ArrayList<Route> routes;
 
     public Handler() {
-        requests = new ArrayList<>();
-        requests.add(new DefaultPage());
-        requests.add(new Form());
-        requests.add(new MethodOptions2());
-        requests.add(new MethodOptions());
-        requests.add(new Redirect());
+        routes = new ArrayList<>();
+        routes.add(new DefaultPage());
+        routes.add(new Form());
+        routes.add(new MethodOptions2());
+        routes.add(new MethodOptions());
+        routes.add(new Redirect());
     }
 
-    public Request handle(Map<String, String> parsedRequest) {
-        for (Request request : requests) {
-            if (request.appliesTo(parsedRequest.get("uri"))) {
-                return request.withData(parsedRequest);
+    public Route handle(Map<String, String> parsedRequest) {
+        for (Route route : routes) {
+            if (route.appliesTo(parsedRequest.get("uri"))) {
+                return route.withData(parsedRequest);
             }
         }
         return new FourOhFour();

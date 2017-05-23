@@ -1,7 +1,7 @@
 import java.io.File;
 import java.util.Map;
 
-public class Form implements Request{
+public class Form implements Route {
     private Map<String, String> data;
     private String temp = "Hello";
     private File content;
@@ -26,7 +26,7 @@ public class Form implements Request{
     }
 
     @Override
-    public Request withData(Map<String, String> data) {
+    public Route withData(Map<String, String> data) {
         this.data = data;
         return this;
     }

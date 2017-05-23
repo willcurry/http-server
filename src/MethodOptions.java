@@ -1,6 +1,6 @@
 import java.util.Map;
 
-public class MethodOptions implements Request {
+public class MethodOptions implements Route {
     @Override
     public Response getResponse() {
         Response response = new Response();
@@ -16,7 +16,7 @@ public class MethodOptions implements Request {
     }
 
     @Override
-    public Request withData(Map<String, String> data) {
+    public Route withData(Map<String, String> data) {
         return this;
     }
 }

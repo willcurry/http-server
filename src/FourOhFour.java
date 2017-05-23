@@ -1,6 +1,6 @@
 import java.util.Map;
 
-public class FourOhFour implements Request {
+public class FourOhFour implements Route {
     public Response getResponse() {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
@@ -14,7 +14,7 @@ public class FourOhFour implements Request {
     }
 
     @Override
-    public Request withData(Map<String, String> data) {
+    public Route withData(Map<String, String> data) {
         return this;
     }
 }

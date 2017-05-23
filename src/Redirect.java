@@ -1,6 +1,6 @@
 import java.util.Map;
 
-public class Redirect implements Request {
+public class Redirect implements Route {
     @Override
     public Response getResponse() {
         Response response = new Response();
@@ -16,7 +16,7 @@ public class Redirect implements Request {
     }
 
     @Override
-    public Request withData(Map<String, String> data) {
+    public Route withData(Map<String, String> data) {
         return this;
     }
 }

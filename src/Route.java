@@ -1,7 +1,7 @@
 import java.util.Map;
 
-public interface Request {
+public interface Route {
     Response getResponse();
     Boolean appliesTo(String uri);
-    Request withData(Map<String, String> data);
+    Route withData(Map<String, String> data);
 }
