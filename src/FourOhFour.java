@@ -1,5 +1,3 @@
-import java.util.Map;
-
 public class FourOhFour implements Route {
     public Response getResponse() {
         Response response = new Response();
@@ -14,7 +12,7 @@ public class FourOhFour implements Route {
     }
 
     @Override
-    public Route withData(Map<String, String> data) {
+    public Route withData(HTTPRequest request) {
         return this;
     }
 }

@@ -1,5 +1,5 @@
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Handler {
     private ArrayList<Route> routes;
@@ -13,10 +13,10 @@ public class Handler {
         routes.add(new Redirect());
     }
 
-    public Route handle(Map<String, String> parsedRequest) {
+    public Route handle(HTTPRequest request) throws IOException {
         for (Route route : routes) {
-            if (route.appliesTo(parsedRequest.get("uri"))) {
-                return route.withData(parsedRequest);
+            if (route.appliesTo(request.getURI())) {
+                return route.withData(request);
             }
         }
         return new FourOhFour();

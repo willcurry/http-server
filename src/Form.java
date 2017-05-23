@@ -1,21 +1,23 @@
-import java.io.File;
-import java.util.Map;
+import java.io.IOException;
 
 public class Form implements Route {
-    private Map<String, String> data;
+    private HTTPRequest data;
     private String temp = "Hello";
-    private File content;
 
     @Override
     public Response getResponse() {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        if (data.get("verb").equals("GET"))  {
-            response.setHeader("Content-Type: text/plain\nContent-Length: " + temp.length());
-            response.setContent(temp);
-        } else if (data.get("verb").equals("POST")) {
-            temp = data.get("body");
+        try {
+            if (data.getVerb().equals("GET"))  {
+                response.setHeader("Content-Type: text/plain\nContent-Length: " + temp.length());
+                response.setContent(temp);
+            } else if (data.getVerb().equals("POST")) {
+                temp = data.getVerb();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return response;
     }
@@ -26,8 +28,8 @@ public class Form implements Route {
     }
 
     @Override
-    public Route withData(Map<String, String> data) {
-        this.data = data;
+    public Route withData(HTTPRequest request) {
+        this.data = request;
         return this;
     }
 }

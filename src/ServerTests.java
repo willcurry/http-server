@@ -13,7 +13,7 @@ public class ServerTests {
     PrintWriter output;
     ExitListenerMock exitListener;
 
-    public void before(String request) throws IOException, RequestParser.InvalidRequest {
+    public void before(String request) throws IOException {
         input = new BufferedReader(new StringReader(request));
         out = new StringWriter();
         output = new PrintWriter(out, true);
@@ -23,61 +23,61 @@ public class ServerTests {
     }
 
     @Test
-    public void responseIsStatus200WhenGET() throws IOException, RequestParser.InvalidRequest {
+    public void responseIsStatus200WhenGET() throws IOException {
         before("GET / HTTP/1.1");
         assertThat(out.toString(), containsString("HTTP/1.1 200 OK"));
     }
 
     @Test
-    public void responseIsStatus200WhenPOST() throws IOException, RequestParser.InvalidRequest {
+    public void responseIsStatus200WhenPOST() throws IOException {
         before("POST / HTTP/1.1");
         assertThat(out.toString(), is("HTTP/1.1 200 OK"));
     }
 
     @Test
-    public void responseIsStatus200WhenPUT() throws IOException, RequestParser.InvalidRequest {
+    public void responseIsStatus200WhenPUT() throws IOException {
         before("POST / HTTP/1.1");
         assertThat(out.toString(), is("HTTP/1.1 200 OK"));
     }
 
     @Test
-    public void responseIsStatus404WhenUnknownURI() throws IOException, RequestParser.InvalidRequest {
+    public void responseIsStatus404WhenUnknownURI() throws IOException {
         before("GET /foobar HTTP/1.1");
         assertThat(out.toString(), is("HTTP/1.1 404 Not Found"));
     }
 
     @Test
-    public void responseIsStatus404WhenHeadRequestOnUnknownURI() throws IOException, RequestParser.InvalidRequest {
+    public void responseIsStatus404WhenHeadRequestOnUnknownURI() throws IOException {
         before("HEAD /foobar HTTP/1.1");
         assertThat(out.toString(), is("HTTP/1.1 404 Not Found"));
     }
 
     @Test
-    public void whenURIIsMethodOptionsTheHeaderAllowsCorrectMethods() throws IOException, RequestParser.InvalidRequest {
+    public void whenURIIsMethodOptionsTheHeaderAllowsCorrectMethods() throws IOException {
         before("GET /method_options HTTP/1.1");
         assertThat(out.toString(), containsString("ALLOW: GET,HEAD,POST,OPTIONS,PUT"));
     }
 
     @Test
-    public void whenURIIsMethodOptions2TheHeaderAllowsCorrectMethods() throws IOException, RequestParser.InvalidRequest {
+    public void whenURIIsMethodOptions2TheHeaderAllowsCorrectMethods() throws IOException {
         before("GET /method_options2 HTTP/1.1");
         assertThat(out.toString(), containsString("ALLOW: GET,OPTIONS"));
     }
 
     @Test
-    public void responseIsStatus302WhenURIIsRedirect() throws IOException, RequestParser.InvalidRequest {
+    public void responseIsStatus302WhenURIIsRedirect() throws IOException {
         before("GET /redirect HTTP/1.1");
         assertThat(out.toString().contains("HTTP/1.1 302 Found"), is(true));
     }
 
     @Test
-    public void locationIsSetToHomeWhenURIIsRedirect() throws IOException, RequestParser.InvalidRequest {
+    public void locationIsSetToHomeWhenURIIsRedirect() throws IOException {
         before("GET /redirect HTTP/1.1");
         assertThat(out.toString().contains("Location: /"), is(true));
     }
 
     @Test
-    public void whenDataIsPostedToFormTheResponseOfTheBodyContainsTheData() throws IOException, RequestParser.InvalidRequest {
+    public void whenDataIsPostedToFormTheResponseOfTheBodyContainsTheData() throws IOException {
         //"GET /form HTTP/1.1\r\n\r\n"
         before("POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat\r\n\r\n");
         assertThat(out.toString(), containsString("data=fatcat"));

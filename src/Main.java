@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Main {
-    public static void main(String[] args) throws IOException, RequestParser.InvalidRequest {
+    public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(5000);
         Socket clientSocket = serverSocket.accept();
         BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

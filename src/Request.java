@@ -1,11 +1,9 @@
-import com.sun.deploy.util.SystemUtils;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Request {
+public class Request implements HTTPRequest {
     private final Reader input;
     private final String requestString;
     private final String[] requestStringSplit;
@@ -30,18 +28,22 @@ public class Request {
         return buffer.toString();
     }
 
+    @Override
     public String getVerb() throws IOException {
         return requestStringSplit[0];
     }
 
+    @Override
     public String getURI() throws IOException {
         return requestStringSplit[1];
     }
 
+    @Override
     public String getHTTPVersion() throws IOException {
         return requestStringSplit[2];
     }
 
+    @Override
     public ArrayList<String> getHeaders() {
         ArrayList<String> headers = new ArrayList<>();
         for (String line : requestLines) {
@@ -51,6 +53,7 @@ public class Request {
         return headers;
     }
 
+    @Override
     public String getBody() throws IOException {
         for (String header : getHeaders()) {
             if (header.contains("Content-Length:")) return findBody();
