@@ -14,7 +14,7 @@ public class Form implements Route {
                 response.setHeader("Content-Type: text/plain\nContent-Length: " + temp.length());
                 response.setContent(temp);
             } else if (data.getVerb().equals("POST")) {
-                temp = data.getVerb();
+                temp = data.getBody();
             }
         } catch (IOException e) {
             e.printStackTrace();

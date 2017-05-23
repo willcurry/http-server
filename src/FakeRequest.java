@@ -3,14 +3,20 @@ import java.util.ArrayList;
 
 public class FakeRequest implements HTTPRequest {
     private final String uri;
+    private final String body;
+    private final String httpVersion;
+    private final String verb;
 
-    public FakeRequest(String uri) {
+    public FakeRequest(String verb, String uri, String httpVersion, String body) {
         this.uri = uri;
+        this.verb = verb;
+        this.httpVersion = httpVersion;
+        this.body = body;
     }
 
     @Override
     public String getVerb() throws IOException {
-        return null;
+        return this.verb;
     }
 
     @Override
@@ -20,7 +26,7 @@ public class FakeRequest implements HTTPRequest {
 
     @Override
     public String getHTTPVersion() throws IOException {
-        return null;
+        return this.httpVersion;
     }
 
     @Override
@@ -30,6 +36,6 @@ public class FakeRequest implements HTTPRequest {
 
     @Override
     public String getBody() throws IOException {
-        return null;
+        return this.body;
     }
 }
