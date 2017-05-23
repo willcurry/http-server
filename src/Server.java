@@ -29,6 +29,7 @@ public class Server {
                 if (buffer.substring(buffer.length() - 4).equals("\r\n\r\n")) break;
             }
         }
+        System.out.println(buffer.toString());
         buffer.append(getBody(buffer.toString()));
         Map<String, String> request = requestParser.parse(buffer.toString());
         Response response = handler.handle(request).getResponse();

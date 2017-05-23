@@ -24,7 +24,7 @@ public class ServerTests {
 
     @Test
     public void responseIsStatus200WhenGET() throws IOException, RequestParser.InvalidRequest {
-        before("GET / HTTP/1,1");
+        before("GET / HTTP/1.1");
         assertThat(out.toString(), containsString("HTTP/1.1 200 OK"));
     }
 
