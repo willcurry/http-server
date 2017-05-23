@@ -3,21 +3,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Server {
     BufferedReader input;
     PrintWriter output;
     RequestParser requestParser;
     Handler handler;
+    Listener exitListener;
 
-    public Server(BufferedReader input, PrintWriter output) {
+    public Server(BufferedReader input, PrintWriter output, Listener exitListener) {
         this.input = input;
         this.output = output;
         requestParser = new RequestParser();
         handler = new Handler();
+        this.exitListener = exitListener;
     }
 
-    public void run() throws IOException, RequestParser.InvalidRequest {
+    private void handleRequests() throws IOException, RequestParser.InvalidRequest {
         StringBuilder buffer = new StringBuilder();
         int line;
         while ((line = input.read()) != -1) {
@@ -27,10 +30,20 @@ public class Server {
             }
         }
         buffer.append(getBody(buffer.toString()));
-        Response response = handler.handle(requestParser.parse(buffer.toString())).getResponse();
-        System.out.println(response.toString());
+        Map<String, String> request = requestParser.parse(buffer.toString());
+        Response response = handler.handle(request).getResponse();
         output.print(response.toString());
         output.flush();
+    }
+
+    public void run() throws IOException, RequestParser.InvalidRequest {
+        while (hasNotQuit()) {
+            handleRequests();
+        }
+    }
+
+    private boolean hasNotQuit() {
+        return !exitListener.hasBeenTriggered();
     }
 
     private String contentLength(String header) {

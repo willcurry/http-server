@@ -1,8 +1,10 @@
+import java.io.File;
 import java.util.Map;
 
 public class Form implements Request{
     private Map<String, String> data;
     private String temp = "Hello";
+    private File content;
 
     @Override
     public Response getResponse() {
