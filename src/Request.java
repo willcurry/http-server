@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 
 public class Request {
     private final Reader input;
@@ -34,5 +35,15 @@ public class Request {
 
     public String getHTTPVersion() throws IOException {
         return requestStringSplit[2];
+    }
+
+    public ArrayList<String> getHeaders() {
+        String[] requestLines = requestString.split("\n");
+        ArrayList<String> headers = new ArrayList<>();
+        for (String line : requestLines) {
+            if (line.equals("")) return headers;
+            headers.add(line);
+        }
+        return headers;
     }
 }

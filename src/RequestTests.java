@@ -1,10 +1,9 @@
 import org.junit.Test;
 
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class RequestTests {
@@ -52,5 +51,18 @@ public class RequestTests {
                            "Accept-Encoding: gzip,deflate");
         before();
         assertEquals(request.getHTTPVersion(), "HTTP/1.1");
+    }
+
+    @Test
+    public void canGetHeaders() throws IOException {
+        setFakeRequest("GET / HTTP/1.1\n" +
+                       "Host: localhost:5000\n" +
+                       "Connection: Keep-Alive\n" +
+                       "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
+                       "Accept-Encoding: gzip,deflate\n\n" +
+                       "body");
+        before();
+        String[] expected = new String[]{"GET / HTTP/1.1", "Host: localhost:5000", "Connection: Keep-Alive", "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)", "Accept-Encoding: gzip,deflate"};
+        assertArrayEquals(expected, (request.getHeaders().toArray()));
     }
 }
