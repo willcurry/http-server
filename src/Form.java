@@ -13,8 +13,10 @@ public class Form implements Route {
             if (request.getVerb().equals("GET"))  {
                 response.setHeader("Content-Type: text/plain\nContent-Length: " + temp.length());
                 response.setContent(temp);
-            } else if (request.getVerb().equals("POST")) {
+            } else if (request.getVerb().equals("POST") || request.getVerb().equals("PUT")) {
                 temp = request.getBody();
+            } else if (request.getVerb().equals("DELETE")) {
+                temp = "";
             }
         } catch (IOException e) {
             e.printStackTrace();
