@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class Memory {
     private String data;
@@ -24,5 +25,9 @@ public class Memory {
 
     public boolean hasData() {
         return this.data != null;
+    }
+
+    public void writeToFile(String path, String text) throws IOException {
+        Files.write(Paths.get(path), text.getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
     }
 }

@@ -33,4 +33,13 @@ public class MemoryTests {
         Memory memory = new Memory();
         assertEquals(memory.readFile("/Users/willcurry/cob_spec/public/patch-content.txt"), "default content");
     }
+
+    @Test
+    public void canWriteToExistingFile() throws IOException {
+        Memory memory = new Memory();
+        assertEquals(memory.readFile("/Users/willcurry/cob_spec/public/test-file.txt"), "starting text");
+        memory.writeToFile("/Users/willcurry/cob_spec/public/test-file.txt", "test");
+        assertEquals(memory.readFile("/Users/willcurry/cob_spec/public/test-file.txt"), "test");
+        memory.writeToFile("/Users/willcurry/cob_spec/public/test-file.txt", "starting text");
+    }
 }
