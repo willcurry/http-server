@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Memory {
     private String data;
 
@@ -7,6 +11,11 @@ public class Memory {
 
     public String getData() {
         return this.data;
+    }
+
+    public String readFile(String path) throws IOException {
+        byte[] fileBytes = Files.readAllBytes(Paths.get(path));
+        return new String(fileBytes, "UTF-8");
     }
 
     public void removeData() {

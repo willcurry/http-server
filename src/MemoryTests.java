@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class MemoryTests {
@@ -24,5 +26,11 @@ public class MemoryTests {
         Memory memory = new Memory();
         memory.saveData("hello");
         assertEquals(memory.hasData(), true);
+    }
+
+    @Test
+    public void canReadFile() throws IOException {
+        Memory memory = new Memory();
+        assertEquals(memory.readFile("/Users/willcurry/cob_spec/public/patch-content.txt"), "default content");
     }
 }
