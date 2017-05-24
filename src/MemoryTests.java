@@ -3,7 +3,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class MemoryTests {
     private Memory memory;
@@ -34,14 +36,14 @@ public class MemoryTests {
 
     @Test
     public void canReadFile() throws IOException {
-        assertEquals(memory.readFile("patch-content.txt"), "default content");
+        assertThat(Util.makeString(memory.readFile("patch-content.txt")), is("default content"));
     }
 
     @Test
     public void canWriteToExistingFile() throws IOException {
-        assertEquals(memory.readFile("test-file.txt"), "starting text");
+        assertThat(memory.readFile("test-file.txt"), is("starting text".getBytes()));
         memory.writeToFile("test-file.txt", "test");
-        assertEquals(memory.readFile("test-file.txt"), "test");
+        assertThat(memory.readFile("test-file.txt"), is("test".getBytes()));
         memory.writeToFile("test-file.txt", "starting text");
     }
 
@@ -49,5 +51,10 @@ public class MemoryTests {
     public void knowsIfAFileHasData() throws IOException {
         assertEquals(false, memory.fileHasData("empty.txt"));
         assertEquals(true , memory.fileHasData("test-file.txt"));
+    }
+
+    @Test
+    public void canReadFileWithRange() throws IOException {
+        assertThat(memory.readFileWithRange("test-file.txt", 4, 9), is("ting ".getBytes()));
     }
 }

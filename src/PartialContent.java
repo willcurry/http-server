@@ -14,7 +14,11 @@ public class PartialContent implements Route {
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(206, "OK");
         if (request.getVerb().equals("GET"))  {
-            if (memory.hasData()) response.setContent(memory.getData());
+            if (memory.fileHasData("partial_content.txt")) {
+                int[] range = findRange();
+                String content = Util.makeString(memory.readFileWithRange("partial_content.txt", range[0], range[1]));
+                response.setContent(content);
+            }
         }
         return response;
     }
@@ -28,5 +32,29 @@ public class PartialContent implements Route {
     public Route withData(HTTPRequest request) {
         this.request = request;
         return this;
+    }
+
+    private int[] findRange() throws IOException {
+        for (String header : request.getHeaders()) {
+            if (header.contains("Range:")) return getRange(header);
+        }
+        return null;
+    }
+
+    private int[] getRange(String header) throws IOException {
+        byte[] content = memory.readFile("partial_content.txt");
+        String rangeString = header.split("=")[1];
+        String[] ints = rangeString.split("-", 2);
+        int[] range = new int[2];
+        range[0] = -1;
+        range[1] = -1;
+        if (!ints[0].isEmpty()) range[0] = Integer.parseInt(ints[0]);
+        if (!ints[1].isEmpty()) range[1] = Integer.parseInt(ints[1]);
+        if (range[1] <= 0) range[1] = content.length;
+        if (range[0] < 0) {
+            range[0] = content.length - range[1] + 1;
+            range[1] = content.length;
+        }
+        return range;
     }
 }

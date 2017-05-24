@@ -6,6 +6,7 @@ public class FakeRequest implements HTTPRequest {
     private final String body;
     private final String httpVersion;
     private final String verb;
+    private ArrayList<String> headers;
 
     public FakeRequest(String verb, String uri, String httpVersion, String body) {
         this.uri = uri;
@@ -31,11 +32,15 @@ public class FakeRequest implements HTTPRequest {
 
     @Override
     public ArrayList<String> getHeaders() throws IOException {
-        return null;
+        return headers;
     }
 
     @Override
     public String getBody() throws IOException {
         return this.body;
+    }
+
+    public void setHeaders(ArrayList<String> headers) {
+        this.headers = headers;
     }
 }

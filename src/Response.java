@@ -1,8 +1,11 @@
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 public class Response {
     private String version;
     private String statusCode;
     private String header;
-    private String content;
+    private byte[] content;
 
     public void setHTTPVersion(String version) {
         this.version = version;
@@ -17,15 +20,30 @@ public class Response {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = content.getBytes();
     }
 
-    public String toString() {
-        return this.version + " " + this.statusCode + header() + content();
+    public byte[] asByteArray() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        String startLine = this.version + " " + this.statusCode;
+        try {
+            byteArrayOutputStream.write(startLine.getBytes());
+            byteArrayOutputStream.write(header().getBytes());
+            byteArrayOutputStream.write(content());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
-    private String content() {
-        return (content == null) ? "" : "Content-Type: text/plain\nContent-Length: " + content.length() + "\n\n" + content;
+    private byte[] content() throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        if (content != null) {
+            String header = "\nContent-Type: text/plain\nContent-Length: " + content.length + "\n\n";
+            byteArrayOutputStream.write(header.getBytes());
+            byteArrayOutputStream.write(content);
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
     private String header() {

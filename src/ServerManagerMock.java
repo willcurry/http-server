@@ -1,12 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 public class ServerManagerMock implements HTTPServerManager {
     private final BufferedReader input;
-    private final PrintWriter output;
+    private final OutputStream output;
 
-    public ServerManagerMock(BufferedReader input, PrintWriter output) {
+    public ServerManagerMock(BufferedReader input, OutputStream output) {
         this.input = input;
         this.output = output;
     }
@@ -27,8 +28,8 @@ public class ServerManagerMock implements HTTPServerManager {
     }
 
     @Override
-    public void output(String message) throws IOException {
-        output.print(message);
+    public void output(byte[] message) throws IOException {
+        output.write(message);
         output.flush();
     }
 }

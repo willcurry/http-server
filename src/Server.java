@@ -23,7 +23,7 @@ public class Server {
         while (hasNotQuit()) {
             serverManager.acceptRequests();
             Response response = getResponse(serverManager.getInputStream());
-            serverManager.output(response.toString());
+            serverManager.output(response.asByteArray());
         }
     }
 

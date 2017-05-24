@@ -24,7 +24,6 @@ public class Request implements HTTPRequest {
                 if (buffer.substring(buffer.length() - 4).equals("\r\n\r\n")) break;
             }
         }
-        System.out.println(buffer.toString());
         return buffer.toString();
     }
 

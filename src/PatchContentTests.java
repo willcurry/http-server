@@ -24,29 +24,29 @@ public class PatchContentTests {
     public void hasContentOfDefaultContent() throws IOException {
         setUpFakeRequest("GET", "/patch-content.txt", "");
         patchContent.withData(fakeRequest);
-        assertThat(patchContent.getResponse().toString(), containsString("default content"));
+        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("default content"));
     }
 
     @Test
     public void returns204NoContentAfterPatch() throws IOException {
         setUpFakeRequest("PATCH", "/patch-content.txt", "default content");
         patchContent.withData(fakeRequest);
-        assertThat(patchContent.getResponse().toString(), containsString("204"));
+        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("204"));
     }
 
     @Test
     public void patchGetPatchGet() throws IOException {
         setUpFakeRequest("PATCH", "/patch-content.txt", "hello");
         patchContent.withData(fakeRequest);
-        assertThat(patchContent.getResponse().toString(), containsString("204"));
+        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("204"));
         setUpFakeRequest("GET", "/patch-content.txt", "");
         patchContent.withData(fakeRequest);
-        assertThat(patchContent.getResponse().toString(), containsString("hello"));
+        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("hello"));
         setUpFakeRequest("PATCH", "/patch-content.txt", "default content");
         patchContent.withData(fakeRequest);
-        assertThat(patchContent.getResponse().toString(), containsString("204"));
+        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("204"));
         setUpFakeRequest("GET", "/patch-content.txt", "");
         patchContent.withData(fakeRequest);
-        assertThat(patchContent.getResponse().toString(), containsString("default content"));
+        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("default content"));
     }
 }
