@@ -42,4 +42,11 @@ public class MemoryTests {
         assertEquals(memory.readFile("/Users/willcurry/cob_spec/public/test-file.txt"), "test");
         memory.writeToFile("/Users/willcurry/cob_spec/public/test-file.txt", "starting text");
     }
+
+    @Test
+    public void knowsIfAFileHasData() throws IOException {
+        Memory memory = new Memory();
+        assertEquals(false, memory.fileHasData("/Users/willcurry/cob_spec/public/empty.txt"));
+        assertEquals(true , memory.fileHasData("/Users/willcurry/cob_spec/public/test-file.txt"));
+    }
 }

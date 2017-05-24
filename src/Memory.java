@@ -23,6 +23,11 @@ public class Memory {
         this.data = null;
     }
 
+    public boolean fileHasData(String path) throws IOException {
+        byte[] fileBytes = Files.readAllBytes(Paths.get(path));
+        return fileBytes.length > 1;
+    }
+
     public boolean hasData() {
         return this.data != null;
     }
