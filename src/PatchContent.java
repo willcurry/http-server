@@ -5,7 +5,7 @@ public class PatchContent implements Route {
     private HTTPRequest request;
 
     public PatchContent() {
-        this.memory = new Memory();
+        this.memory = new Memory("/Users/willcurry/cob_spec/public/");
     }
 
     @Override
@@ -14,9 +14,9 @@ public class PatchContent implements Route {
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
         if (request.getVerb().equals("GET"))  {
-            if (memory.fileHasData("/Users/willcurry/cob_spec/public/patch-content.txt")) response.setContent(memory.readFile("/Users/willcurry/cob_spec/public/patch-content.txt"));
+            if (memory.fileHasData("patch-content.txt")) response.setContent(memory.readFile("patch-content.txt"));
         } else if (request.getVerb().equals("PATCH")) {
-            memory.writeToFile("/Users/willcurry/cob_spec/public/patch-content.txt", request.getBody());
+            memory.writeToFile("patch-content.txt", request.getBody());
             response.setStatusCode(204, "No Content");
         }
         return response;

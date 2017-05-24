@@ -5,7 +5,7 @@ public class Form implements Route {
     private Memory memory;
 
     public Form() {
-        memory = new Memory();
+        this.memory = new Memory("/Users/willcurry/cob_spec/public/");
     }
 
     @Override

@@ -5,7 +5,7 @@ public class PartialContent implements Route {
     private HTTPRequest request;
 
     public PartialContent() {
-        this.memory = new Memory();
+        this.memory = new Memory("/Users/willcurry/cob_spec/public/");
     }
 
     @Override
