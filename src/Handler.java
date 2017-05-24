@@ -12,6 +12,7 @@ public class Handler {
         routes.add(new MethodOptions());
         routes.add(new Redirect());
         routes.add(new PatchContent());
+        routes.add(new PartialContent());
     }
 
     public Route handle(HTTPRequest request) throws IOException {
