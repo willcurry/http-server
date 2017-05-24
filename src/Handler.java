@@ -11,6 +11,7 @@ public class Handler {
         routes.add(new MethodOptions2());
         routes.add(new MethodOptions());
         routes.add(new Redirect());
+        routes.add(new PatchContent());
     }
 
     public Route handle(HTTPRequest request) throws IOException {

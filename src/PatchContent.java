@@ -1,11 +1,12 @@
 import java.io.IOException;
 
-public class Form implements Route {
+public class PatchContent implements Route {
+    private final Memory memory;
     private HTTPRequest request;
-    private Memory memory;
 
-    public Form() {
-        memory = new Memory();
+    public PatchContent() {
+        this.memory = new Memory();
+        this.memory.saveData("default content");
     }
 
     @Override
@@ -15,17 +16,16 @@ public class Form implements Route {
         response.setStatusCode(200, "OK");
         if (request.getVerb().equals("GET"))  {
             if (memory.hasData()) response.setContent(memory.getData());
-        } else if (request.getVerb().equals("POST") || request.getVerb().equals("PUT")) {
+        } else if (request.getVerb().equals("PATCH")) {
             memory.saveData(request.getBody());
-        } else if (request.getVerb().equals("DELETE")) {
-            memory.removeData();
+            response.setStatusCode(204, "No Content");
         }
         return response;
     }
 
     @Override
     public Boolean appliesTo(String uri) {
-        return uri.equals("/form");
+        return (uri.equals("/patch-content.txt"));
     }
 
     @Override

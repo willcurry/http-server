@@ -13,7 +13,6 @@ public class Memory {
         this.data = null;
     }
 
-
     public boolean hasData() {
         return this.data != null;
     }
