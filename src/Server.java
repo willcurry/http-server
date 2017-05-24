@@ -1,30 +1,30 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class Server {
-    BufferedReader input;
-    PrintWriter output;
-    Handler handler;
-    Listener exitListener;
+    private final int port;
+    private final HTTPServerManager serverManager;
+    private Handler handler;
+    private Listener exitListener;
 
-    public Server(BufferedReader input, PrintWriter output, Listener exitListener) {
-        this.input = input;
-        this.output = output;
+    public Server(int port, Listener exitListener, HTTPServerManager serverManager) {
         handler = new Handler();
         this.exitListener = exitListener;
+        this.port = port;
+        this.serverManager = serverManager;
     }
 
-    private void handleRequests() throws IOException {
+    private Response getResponse(BufferedReader input) throws IOException {
         Request request = new Request(input);
-        Response response = handler.handle(request).getResponse();
-        output.print(response.toString());
-        output.flush();
+        return handler.handle(request).getResponse();
     }
 
     public void run() throws IOException {
+        serverManager.setUp(port);
         while (hasNotQuit()) {
-            handleRequests();
+            serverManager.acceptRequests();
+            Response response = getResponse(serverManager.getInputStream());
+            serverManager.output(response.toString());
         }
     }
 

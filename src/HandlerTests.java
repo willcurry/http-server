@@ -5,7 +5,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertTrue;
 
 public class HandlerTests {
-    FakeRequest fakeRequest;
+    private FakeRequest fakeRequest;
     private Handler handler;
 
     private void setUpFakeRequest(String verb, String uri, String body) {

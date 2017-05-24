@@ -18,7 +18,7 @@ public class ServerTests {
         out = new StringWriter();
         output = new PrintWriter(out, true);
         exitListener = new ExitListenerMock(input);
-        server = new Server(input, output, exitListener);
+        server = new Server(5000, exitListener, new ServerManagerMock(input, output));
         server.run();
     }
 
@@ -74,12 +74,5 @@ public class ServerTests {
     public void locationIsSetToHomeWhenURIIsRedirect() throws IOException {
         before("GET /redirect HTTP/1.1");
         assertThat(out.toString().contains("Location: /"), is(true));
-    }
-
-    @Test
-    public void whenDataIsPostedToFormTheResponseOfTheBodyContainsTheData() throws IOException {
-        //"GET /form HTTP/1.1\r\n\r\n"
-        before("POST /form HTTP/1.1\nContent-Length: 11\n\ndata=fatcat\r\n\r\n");
-        assertThat(out.toString(), containsString("data=fatcat"));
     }
 }
