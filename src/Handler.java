@@ -5,14 +5,15 @@ public class Handler {
     private ArrayList<Route> routes;
 
     public Handler() {
+        Memory memory = new Memory("/Users/willcurry/cob_spec/public/");
         routes = new ArrayList<>();
         routes.add(new DefaultPage());
-        routes.add(new Form());
+        routes.add(new Form(memory));
         routes.add(new MethodOptions2());
         routes.add(new MethodOptions());
         routes.add(new Redirect());
-        routes.add(new PatchContent());
-        routes.add(new PartialContent());
+        routes.add(new PatchContent(memory));
+        routes.add(new PartialContent(memory));
     }
 
     public Route handle(HTTPRequest request) throws IOException {

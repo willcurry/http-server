@@ -4,8 +4,8 @@ public class Form implements Route {
     private HTTPRequest request;
     private Memory memory;
 
-    public Form() {
-        this.memory = new Memory("/Users/willcurry/cob_spec/public/");
+    public Form(Memory memory) {
+        this.memory = memory;
     }
 
     @Override

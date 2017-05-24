@@ -85,7 +85,7 @@ public class RequestTests {
     @Test
     public void canGetBodyWithNewLines() throws IOException {
         setFakeRequest("POST /form HTTP/1.1\n" +
-                "Content-Length: 11\n" +
+                "Content-Length: 8\n" +
                 "Host: localhost:5000\n" +
                 "Connection: Keep-Alive\n" +
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +

@@ -4,8 +4,8 @@ public class PatchContent implements Route {
     private final Memory memory;
     private HTTPRequest request;
 
-    public PatchContent() {
-        this.memory = new Memory("/Users/willcurry/cob_spec/public/");
+    public PatchContent(Memory memory) {
+        this.memory = memory;
     }
 
     @Override
