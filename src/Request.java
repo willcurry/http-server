@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Request implements HTTPRequest {
     private final Reader input;
@@ -56,26 +55,15 @@ public class Request implements HTTPRequest {
     @Override
     public String getBody() throws IOException {
         for (String header : getHeaders()) {
-            if (header.contains("Content-Length:")) return findBody();
+            if (header.contains("Content-Length:")) return findBody(header);
         }
         return "";
     }
 
-    private String findBody() throws IOException {
-        for (int i=0; i < requestLines.length; i++) {
-            if (requestLines[i].equals("")) {
-                return arrayToString(Arrays.copyOfRange(requestLines, i++, requestLines.length));
-            }
-        }
-        return "";
-    }
-
-    private String arrayToString(String[] array) {
-        String arrayString = "";
-        for (String line : array) {
-            if (line.equals("")) continue;
-            arrayString += line + "\n";
-        }
-        return arrayString.substring(0, arrayString.length() - 1);
+    private String findBody(String header) throws IOException {
+        int length = Integer.valueOf(header.split("\\s+")[1]);
+        char[] content = new char[length];
+        input.read(content, 0, length);
+        return String.valueOf(content);
     }
 }

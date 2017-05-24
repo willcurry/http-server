@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public class Form implements Route {
-    private HTTPRequest data;
+    private HTTPRequest request;
     private String temp = "Hello";
 
     @Override
@@ -10,11 +10,11 @@ public class Form implements Route {
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
         try {
-            if (data.getVerb().equals("GET"))  {
+            if (request.getVerb().equals("GET"))  {
                 response.setHeader("Content-Type: text/plain\nContent-Length: " + temp.length());
                 response.setContent(temp);
-            } else if (data.getVerb().equals("POST")) {
-                temp = data.getBody();
+            } else if (request.getVerb().equals("POST")) {
+                temp = request.getBody();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class Form implements Route {
 
     @Override
     public Route withData(HTTPRequest request) {
-        this.data = request;
+        this.request = request;
         return this;
     }
 }
