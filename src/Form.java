@@ -15,10 +15,7 @@ public class Form implements Route {
         response.setStatusCode(200, "OK");
         try {
             if (request.getVerb().equals("GET"))  {
-                if (memory.hasData()) {
-                    response.setHeader("Content-Type: text/plain\nContent-Length: " + memory.getData().length());
-                    response.setContent(memory.getData());
-                }
+                if (memory.hasData()) response.setContent(memory.getData());
             } else if (request.getVerb().equals("POST") || request.getVerb().equals("PUT")) {
                 memory.saveData(request.getBody());
             } else if (request.getVerb().equals("DELETE")) {

@@ -25,7 +25,7 @@ public class Response {
     }
 
     private String content() {
-        return (content == null) ? "" : "\n" + content;
+        return (content == null) ? "" : "Content-Type: text/plain\nContent-Length: " + content.length() + "\n" + content;
     }
 
     private String header() {
