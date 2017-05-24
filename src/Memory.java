@@ -1,17 +1,20 @@
-import java.util.HashMap;
-
 public class Memory {
-    private final HashMap<String, String> data;
+    private String data;
 
-    public Memory() {
-        this.data = new HashMap<>();
+    public void saveData(String data) {
+        this.data = data;
     }
 
-    public void saveData(String uri, String data) {
-        this.data.put(uri, data);
+    public String getData() {
+        return this.data;
     }
 
-    public String dataForURI(String uri) {
-        return data.get(uri);
+    public void removeData() {
+        this.data = null;
+    }
+
+
+    public boolean hasData() {
+        return this.data != null;
     }
 }

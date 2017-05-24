@@ -2,7 +2,11 @@ import java.io.IOException;
 
 public class Form implements Route {
     private HTTPRequest request;
-    private String temp = "Hello";
+    private Memory memory;
+
+    public Form() {
+        memory = new Memory();
+    }
 
     @Override
     public Response getResponse() {
@@ -11,12 +15,14 @@ public class Form implements Route {
         response.setStatusCode(200, "OK");
         try {
             if (request.getVerb().equals("GET"))  {
-                response.setHeader("Content-Type: text/plain\nContent-Length: " + temp.length());
-                response.setContent(temp);
+                if (memory.hasData()) {
+                    response.setHeader("Content-Type: text/plain\nContent-Length: " + memory.getData().length());
+                    response.setContent(memory.getData());
+                }
             } else if (request.getVerb().equals("POST") || request.getVerb().equals("PUT")) {
-                temp = request.getBody();
+                memory.saveData(request.getBody());
             } else if (request.getVerb().equals("DELETE")) {
-                temp = "";
+                memory.removeData();
             }
         } catch (IOException e) {
             e.printStackTrace();
