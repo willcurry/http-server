@@ -13,7 +13,7 @@ public class BaseRoute {
         return response;
     }
 
-    public Boolean appliesTo(String uri) {
+    public Boolean appliesTo(String uri) throws IOException {
         return false;
     }
 

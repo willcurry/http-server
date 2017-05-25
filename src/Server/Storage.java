@@ -58,4 +58,8 @@ public class Storage {
         Files.walk(Paths.get(directory)).forEach((file)->files.add(file));
         return files;
     }
+
+    public Path getPath(String path) {
+        return Paths.get(directory + path);
+    }
 }
