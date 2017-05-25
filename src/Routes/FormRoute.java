@@ -6,11 +6,11 @@ import Server.Response;
 
 import java.io.IOException;
 
-public class Form extends BaseRoute {
+public class FormRoute extends BaseRoute {
     private HTTPRequest request;
     private Memory memory;
 
-    public Form(Memory memory) {
+    public FormRoute(Memory memory) {
         this.memory = memory;
     }
 

@@ -6,10 +6,10 @@ import Server.Response;
 
 import java.io.IOException;
 
-public class PatchContent extends BaseRoute {
+public class PatchContentRoute extends BaseRoute {
     private final Memory memory;
 
-    public PatchContent(Memory memory) {
+    public PatchContentRoute(Memory memory) {
         this.memory = memory;
     }
 

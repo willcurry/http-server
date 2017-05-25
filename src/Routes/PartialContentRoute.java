@@ -6,10 +6,10 @@ import Server.Response;
 
 import java.io.IOException;
 
-public class PartialContent extends BaseRoute {
+public class PartialContentRoute extends BaseRoute {
     private final Memory memory;
 
-    public PartialContent(Memory memory) {
+    public PartialContentRoute(Memory memory) {
         this.memory = memory;
     }
 

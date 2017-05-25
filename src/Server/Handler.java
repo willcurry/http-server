@@ -11,17 +11,17 @@ public class Handler {
     public Handler() {
         Memory memory = new Memory("/Users/willcurry/cob_spec/public/");
         routes = new ArrayList<>();
-        routes.add(new DefaultPage());
-        routes.add(new Form(memory));
-        routes.add(new MethodOptions2());
-        routes.add(new MethodOptions());
-        routes.add(new Redirect());
-        routes.add(new PatchContent(memory));
-        routes.add(new PartialContent(memory));
-        routes.add(new File1(memory));
-        routes.add(new TextFile());
-        routes.add(new Tea());
-        routes.add(new Coffee());
+        routes.add(new DefaultPageRoute());
+        routes.add(new FormRoute(memory));
+        routes.add(new MethodOptions2Route());
+        routes.add(new MethodOptionsRoute());
+        routes.add(new RedirectRoute());
+        routes.add(new PatchContentRoute(memory));
+        routes.add(new PartialContentRoute(memory));
+        routes.add(new File1Route(memory));
+        routes.add(new TextFileRoute(memory));
+        routes.add(new TeaRoute());
+        routes.add(new CoffeeRoute());
         routes.add(new Parameters());
     }
 
@@ -31,7 +31,7 @@ public class Handler {
                 return findResponseForRequest(request, route);
             }
         }
-        return new FourOhFour().handleGET(request);
+        return new FourOhFourRoute().handleGET(request);
     }
 
     private Response findResponseForRequest(HTTPRequest request, BaseRoute route) throws IOException {

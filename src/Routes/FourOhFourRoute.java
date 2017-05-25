@@ -3,17 +3,18 @@ package Routes;
 import Server.HTTPRequest;
 import Server.Response;
 
-public class Tea extends BaseRoute {
-    @Override
-    public Boolean appliesTo(String uri) {
-        return uri.equals("/tea");
-    }
+public class FourOhFourRoute extends BaseRoute {
 
     @Override
     public Response handleGET(HTTPRequest request) {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
-        response.setStatusCode(200, "OK");
+        response.setStatusCode(404, "Not Found");
         return response;
+    }
+
+    @Override
+    public Boolean appliesTo(String uri) {
+        return false;
     }
 }

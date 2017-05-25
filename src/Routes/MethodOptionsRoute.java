@@ -3,7 +3,7 @@ package Routes;
 import Server.HTTPRequest;
 import Server.Response;
 
-public class MethodOptions extends BaseRoute {
+public class MethodOptionsRoute extends BaseRoute {
     @Override
     public Boolean appliesTo(String uri) {
         return uri.equals("/method_options");

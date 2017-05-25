@@ -1,6 +1,6 @@
 package Tests;
 
-import Routes.PartialContent;
+import Routes.PartialContentRoute;
 import Server.Memory;
 import Server.Response;
 import org.junit.Before;
@@ -14,14 +14,14 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
 public class PartialContentTests {
-    private PartialContent partialContent;
+    private PartialContentRoute partialContent;
     private ArrayList headers;
 
     @Before
     public void before() {
         headers = new ArrayList<>();
         Memory memory = new Memory("/Users/willcurry/cob_spec/public_test/");
-        partialContent = new PartialContent(memory);
+        partialContent = new PartialContentRoute(memory);
     }
 
     @Test

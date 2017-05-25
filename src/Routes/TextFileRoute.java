@@ -6,16 +6,16 @@ import Server.Response;
 
 import java.io.IOException;
 
-public class File1 extends BaseRoute {
+public class TextFileRoute extends BaseRoute {
     private final Memory memory;
 
-    public File1(Memory memory) {
+    public TextFileRoute(Memory memory) {
         this.memory = memory;
     }
 
     @Override
     public Boolean appliesTo(String uri) {
-        return (uri.equals("/file1"));
+        return (uri.equals("/text-file.txt"));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class File1 extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        if (memory.fileHasData("file1")) response.setContent(memory.readFile("file1"));
+        if (memory.fileHasData("text-file.txt")) response.setContent(memory.readFile("text-file.txt"));
         return response;
     }
 }

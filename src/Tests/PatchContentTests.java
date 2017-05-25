@@ -1,6 +1,6 @@
 package Tests;
 
-import Routes.PatchContent;
+import Routes.PatchContentRoute;
 import Server.Memory;
 import Server.Response;
 import org.junit.Before;
@@ -12,12 +12,12 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
 public class PatchContentTests {
-    private PatchContent patchContent;
+    private PatchContentRoute patchContent;
 
     @Before
     public void before() {
         Memory memory = new Memory("/Users/willcurry/cob_spec/public_test/");
-        patchContent = new PatchContent(memory);
+        patchContent = new PatchContentRoute(memory);
     }
 
     @Test

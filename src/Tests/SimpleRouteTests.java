@@ -1,9 +1,9 @@
 package Tests;
 
-import Routes.Coffee;
-import Routes.File1;
-import Routes.Tea;
-import Routes.TextFile;
+import Routes.CoffeeRoute;
+import Routes.File1Route;
+import Routes.TeaRoute;
+import Routes.TextFileRoute;
 import Server.Memory;
 import Server.Parameters;
 import org.junit.Before;
@@ -15,26 +15,26 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class SimpleRouteTests {
-    private TextFile textFile;
-    private File1 file1;
-    private Tea tea;
-    private Coffee coffee;
+    private TextFileRoute textFile;
+    private File1Route file1;
+    private TeaRoute tea;
+    private CoffeeRoute coffee;
     private Parameters parameters;
 
     @Before
     public void before() {
-        textFile = new TextFile();
         Memory memory = new Memory("/Users/willcurry/cob_spec/public_test/");
-        file1 = new File1(memory);
-        tea = new Tea();
-        coffee = new Coffee();
+        textFile = new TextFileRoute(memory);
+        file1 = new File1Route(memory);
+        tea = new TeaRoute();
+        coffee = new CoffeeRoute();
         parameters = new Parameters();
     }
 
     @Test
     public void getOnTextFileReturns200Response() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/text-file.txt", "");
-        assertThat(TestUtil.makeString(textFile.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK"));
+        assertThat(TestUtil.makeString(textFile.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 14\n\nfile1 contents"));
     }
 
     @Test

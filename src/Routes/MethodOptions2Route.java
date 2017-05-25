@@ -3,10 +3,10 @@ package Routes;
 import Server.HTTPRequest;
 import Server.Response;
 
-public class DefaultPage extends BaseRoute {
+public class MethodOptions2Route extends BaseRoute {
     @Override
     public Boolean appliesTo(String uri) {
-        return uri.equals("/");
+        return uri.equals("/method_options2");
     }
 
     @Override
@@ -18,10 +18,11 @@ public class DefaultPage extends BaseRoute {
     }
 
     @Override
-    public Response handleHEAD(HTTPRequest request) {
+    public Response handleOPTIONS(HTTPRequest request) {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
+        response.setHeader("ALLOW: GET,OPTIONS");
         return response;
     }
 }
