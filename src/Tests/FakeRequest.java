@@ -11,7 +11,6 @@ public class FakeRequest implements HTTPRequest {
     private final String httpVersion;
     private final String verb;
     private ArrayList<String> headers;
-    private String[] URIParameters;
 
     public FakeRequest(String verb, String uri, String httpVersion, String body) {
         this.uri = uri;
@@ -27,7 +26,7 @@ public class FakeRequest implements HTTPRequest {
 
     @Override
     public String getURI() throws IOException {
-        return decodeURI(uri)[0];
+        return parseURI(uri)[0];
     }
 
     @Override
@@ -47,14 +46,24 @@ public class FakeRequest implements HTTPRequest {
 
     @Override
     public String[] getURIParameters() {
-        return decodeURI(uri);
+        String[] parameters = parseURI(uri)[1].split("&");
+        return formatParameters(parameters);
     }
 
-    private String[] decodeURI(String uri) {
+    private String[] formatParameters(String[] parameters) {
+        String[] formattedParameters = new String[parameters.length];
+        for (int i=0; i < parameters.length; i++) {
+            String[] splitParameter = parameters[i].split("=");
+            formattedParameters[i] = splitParameter[0] + " = " + splitParameter[1];
+        }
+        return formattedParameters;
+    }
+
+    private String[] parseURI(String uri) {
         String[] uriWithNoParameters = new String[1];
         uriWithNoParameters[0] = uri;
         if (uri.contains("?")) {
-            String[] splitURI = uri.split("\\?");
+             String[] splitURI = uri.split("\\?");
              return splitURI;
         }
         return uriWithNoParameters;

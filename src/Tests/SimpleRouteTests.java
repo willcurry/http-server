@@ -5,6 +5,7 @@ import Routes.File1;
 import Routes.Tea;
 import Routes.TextFile;
 import Server.Memory;
+import Server.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,7 @@ public class SimpleRouteTests {
     private File1 file1;
     private Tea tea;
     private Coffee coffee;
+    private Parameters parameters;
 
     @Before
     public void before() {
@@ -26,6 +28,7 @@ public class SimpleRouteTests {
         file1 = new File1(memory);
         tea = new Tea();
         coffee = new Coffee();
+        parameters = new Parameters();
     }
 
     @Test
@@ -68,6 +71,6 @@ public class SimpleRouteTests {
     public void getOnParametersReturnsDecodedParametersInTheBody() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff", "");
         String body = "variable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"?" + "variable_2 = stuff";
-        assertThat(TestUtil.makeString(coffee.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: " + body.length() + "\n\n" + body));
+        assertThat(TestUtil.makeString(parameters.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: " + body.length() + "\n\n" + body));
     }
 }
