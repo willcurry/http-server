@@ -1,17 +1,17 @@
 package Routes;
 
 import Server.HTTPRequest;
-import Server.Memory;
+import Server.Storage;
 import Server.Response;
 
 import java.io.IOException;
 
 public class FormRoute extends BaseRoute {
     private HTTPRequest request;
-    private Memory memory;
+    private Storage storage;
 
-    public FormRoute(Memory memory) {
-        this.memory = memory;
+    public FormRoute(Storage storage) {
+        this.storage = storage;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class FormRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        if (memory.hasData()) response.setContent(memory.getData().getBytes());
+        if (storage.hasData()) response.setContent(storage.getData().getBytes());
         return response;
     }
 
@@ -33,7 +33,7 @@ public class FormRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        memory.saveData(request.getBody());
+        storage.saveData(request.getBody());
         return response;
     }
 
@@ -42,7 +42,7 @@ public class FormRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        memory.saveData(request.getBody());
+        storage.saveData(request.getBody());
         return response;
     }
 
@@ -51,7 +51,7 @@ public class FormRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        memory.removeData();
+        storage.removeData();
         return response;
     }
 }

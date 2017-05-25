@@ -1,7 +1,7 @@
 package Tests;
 
 import Routes.PatchContentRoute;
-import Server.Memory;
+import Server.Storage;
 import Server.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +16,8 @@ public class PatchContentTests {
 
     @Before
     public void before() {
-        Memory memory = new Memory("/Users/willcurry/cob_spec/public_test/");
-        patchContent = new PatchContentRoute(memory);
+        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        patchContent = new PatchContentRoute(storage);
     }
 
     @Test

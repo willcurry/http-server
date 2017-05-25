@@ -9,17 +9,17 @@ public class Handler {
     private ArrayList<BaseRoute> routes;
 
     public Handler() {
-        Memory memory = new Memory("/Users/willcurry/cob_spec/public/");
+        Storage storage = new Storage("/Users/willcurry/cob_spec/public/");
         routes = new ArrayList<>();
         routes.add(new DefaultPageRoute());
-        routes.add(new FormRoute(memory));
+        routes.add(new FormRoute(storage));
         routes.add(new MethodOptions2Route());
         routes.add(new MethodOptionsRoute());
         routes.add(new RedirectRoute());
-        routes.add(new PatchContentRoute(memory));
-        routes.add(new PartialContentRoute(memory));
-        routes.add(new File1Route(memory));
-        routes.add(new TextFileRoute(memory));
+        routes.add(new PatchContentRoute(storage));
+        routes.add(new PartialContentRoute(storage));
+        routes.add(new File1Route(storage));
+        routes.add(new TextFileRoute(storage));
         routes.add(new TeaRoute());
         routes.add(new CoffeeRoute());
         routes.add(new Parameters());

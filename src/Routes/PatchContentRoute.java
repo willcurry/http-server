@@ -1,16 +1,16 @@
 package Routes;
 
 import Server.HTTPRequest;
-import Server.Memory;
+import Server.Storage;
 import Server.Response;
 
 import java.io.IOException;
 
 public class PatchContentRoute extends BaseRoute {
-    private final Memory memory;
+    private final Storage storage;
 
-    public PatchContentRoute(Memory memory) {
-        this.memory = memory;
+    public PatchContentRoute(Storage storage) {
+        this.storage = storage;
     }
 
     @Override
@@ -23,8 +23,8 @@ public class PatchContentRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-         if (memory.fileHasData("patch-content.txt")){
-            byte[] fileContents = memory.readFile("patch-content.txt");
+         if (storage.fileHasData("patch-content.txt")){
+            byte[] fileContents = storage.readFile("patch-content.txt");
             response.setContent(fileContents);
         }
         return response;
@@ -35,7 +35,7 @@ public class PatchContentRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(204, "No Content");
-        memory.writeToFile("patch-content.txt", request.getBody());
+        storage.writeToFile("patch-content.txt", request.getBody());
         return response;
     }
 }

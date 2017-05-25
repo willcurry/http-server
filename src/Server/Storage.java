@@ -2,14 +2,16 @@ package Server;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 
-public class Memory {
+public class Storage {
     private final String directory;
     private String data;
 
-    public Memory(String directory) {
+    public Storage(String directory) {
         this.directory = directory;
     }
 
@@ -49,5 +51,11 @@ public class Memory {
             partialFile[i] = fullFile[start + i];
         }
         return partialFile;
+    }
+
+    public ArrayList<Path> allFiles() throws IOException {
+        ArrayList<Path> files = new ArrayList<>();
+        Files.walk(Paths.get(directory)).forEach((file)->files.add(file));
+        return files;
     }
 }

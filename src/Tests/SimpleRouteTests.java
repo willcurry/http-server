@@ -4,7 +4,7 @@ import Routes.CoffeeRoute;
 import Routes.File1Route;
 import Routes.TeaRoute;
 import Routes.TextFileRoute;
-import Server.Memory;
+import Server.Storage;
 import Server.Parameters;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +23,9 @@ public class SimpleRouteTests {
 
     @Before
     public void before() {
-        Memory memory = new Memory("/Users/willcurry/cob_spec/public_test/");
-        textFile = new TextFileRoute(memory);
-        file1 = new File1Route(memory);
+        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        textFile = new TextFileRoute(storage);
+        file1 = new File1Route(storage);
         tea = new TeaRoute();
         coffee = new CoffeeRoute();
         parameters = new Parameters();

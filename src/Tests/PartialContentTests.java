@@ -1,7 +1,7 @@
 package Tests;
 
 import Routes.PartialContentRoute;
-import Server.Memory;
+import Server.Storage;
 import Server.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,8 +20,8 @@ public class PartialContentTests {
     @Before
     public void before() {
         headers = new ArrayList<>();
-        Memory memory = new Memory("/Users/willcurry/cob_spec/public_test/");
-        partialContent = new PartialContentRoute(memory);
+        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        partialContent = new PartialContentRoute(storage);
     }
 
     @Test

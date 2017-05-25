@@ -1,16 +1,16 @@
 package Routes;
 
 import Server.HTTPRequest;
-import Server.Memory;
+import Server.Storage;
 import Server.Response;
 
 import java.io.IOException;
 
 public class TextFileRoute extends BaseRoute {
-    private final Memory memory;
+    private final Storage storage;
 
-    public TextFileRoute(Memory memory) {
-        this.memory = memory;
+    public TextFileRoute(Storage storage) {
+        this.storage = storage;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class TextFileRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        if (memory.fileHasData("text-file.txt")) response.setContent(memory.readFile("text-file.txt"));
+        if (storage.fileHasData("text-file.txt")) response.setContent(storage.readFile("text-file.txt"));
         return response;
     }
 }

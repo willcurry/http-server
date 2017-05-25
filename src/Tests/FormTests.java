@@ -1,7 +1,7 @@
 package Tests;
 
 import Routes.FormRoute;
-import Server.Memory;
+import Server.Storage;
 import Server.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +17,8 @@ public class FormTests {
 
     @Before
     public void before() {
-        Memory memory = new Memory("/Users/willcurry/cob_spec/public_test/");
-        form = new FormRoute(memory);
+        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        form = new FormRoute(storage);
     }
 
     @Test
