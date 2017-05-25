@@ -43,13 +43,13 @@ public class PartialContent implements Route {
 
     private int[] getRange(String header) throws IOException {
         byte[] content = memory.readFile("partial_content.txt");
-        String rangeString = header.split("=")[1];
+        String rangeString = header.trim().split("=")[1];
         String[] ints = rangeString.split("-", 2);
         int[] range = new int[2];
         range[0] = -1;
         range[1] = -1;
         if (!ints[0].isEmpty()) range[0] = Integer.parseInt(ints[0]);
-        if (!ints[1].isEmpty()) range[1] = Integer.parseInt(ints[1]);
+        if (!ints[1].isEmpty()) range[1] = Integer.parseInt(ints[1]) + 1;
         if (range[1] <= 0) range[1] = content.length;
         if (range[0] < 0) {
             range[0] = content.length - range[1] + 1;

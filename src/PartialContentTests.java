@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class PartialContentTests {
@@ -36,7 +35,7 @@ public class PartialContentTests {
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
         partialContent.withData(fakeRequest);
-        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), containsString("HTTP/1.1 206"));
+        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), is("HTTP/1.1 206 OK\nContent-Type: text/plain\nContent-Length: 5\n\nThis "));
     }
 
     @Test
@@ -50,7 +49,7 @@ public class PartialContentTests {
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
         partialContent.withData(fakeRequest);
-        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), containsString("\n\nThis"));
+        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), is("HTTP/1.1 206 OK\nContent-Type: text/plain\nContent-Length: 5\n\nThis "));
     }
 
     @Test
@@ -78,6 +77,6 @@ public class PartialContentTests {
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
         partialContent.withData(fakeRequest);
-        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), containsString("\n\n206.\n"));
+        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), containsString("\n\n 206.\n"));
     }
 }
