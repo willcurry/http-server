@@ -15,7 +15,7 @@ public class Server {
     }
 
     private Response getResponse(BufferedReader input) throws IOException {
-        return handler.handle(new Request(input)).getResponse();
+        return handler.handle(new Request(input));
     }
 
     public void run() throws IOException {

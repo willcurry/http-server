@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class Form implements Route {
+public class Form extends BaseRoute {
     private HTTPRequest request;
     private Memory memory;
 
@@ -9,28 +9,43 @@ public class Form implements Route {
     }
 
     @Override
-    public Response getResponse() throws IOException {
-        Response response = new Response();
-        response.setHTTPVersion("HTTP/1.1");
-        response.setStatusCode(200, "OK");
-        if (request.getVerb().equals("GET"))  {
-            if (memory.hasData()) response.setContent(memory.getData().getBytes());
-        } else if (request.getVerb().equals("POST") || request.getVerb().equals("PUT")) {
-            memory.saveData(request.getBody());
-        } else if (request.getVerb().equals("DELETE")) {
-            memory.removeData();
-        }
-        return response;
-    }
-
-    @Override
     public Boolean appliesTo(String uri) {
         return uri.equals("/form");
     }
 
     @Override
-    public Route withData(HTTPRequest request) {
-        this.request = request;
-        return this;
+    public Response handleGET(HTTPRequest request) {
+        Response response = new Response();
+        response.setHTTPVersion("HTTP/1.1");
+        response.setStatusCode(200, "OK");
+        if (memory.hasData()) response.setContent(memory.getData().getBytes());
+        return response;
+    }
+
+    @Override
+    public Response handlePOST(HTTPRequest request) throws IOException {
+        Response response = new Response();
+        response.setHTTPVersion("HTTP/1.1");
+        response.setStatusCode(200, "OK");
+        memory.saveData(request.getBody());
+        return response;
+    }
+
+    @Override
+    public Response handlePUT(HTTPRequest request) throws IOException {
+        Response response = new Response();
+        response.setHTTPVersion("HTTP/1.1");
+        response.setStatusCode(200, "OK");
+        memory.saveData(request.getBody());
+        return response;
+    }
+
+    @Override
+    public Response handleDELETE(HTTPRequest request) {
+        Response response = new Response();
+        response.setHTTPVersion("HTTP/1.1");
+        response.setStatusCode(200, "OK");
+        memory.removeData();
+        return response;
     }
 }

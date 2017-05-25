@@ -1,28 +1,10 @@
 import java.io.IOException;
 
-public class PatchContent implements Route {
+public class PatchContent extends BaseRoute {
     private final Memory memory;
-    private HTTPRequest request;
 
     public PatchContent(Memory memory) {
         this.memory = memory;
-    }
-
-    @Override
-    public Response getResponse() throws IOException {
-        Response response = new Response();
-        response.setHTTPVersion("HTTP/1.1");
-        response.setStatusCode(200, "OK");
-        if (request.getVerb().equals("GET"))  {
-            if (memory.fileHasData("patch-content.txt")){
-                byte[] fileContents = memory.readFile("patch-content.txt");
-                response.setContent(fileContents);
-            }
-        } else if (request.getVerb().equals("PATCH")) {
-            memory.writeToFile("patch-content.txt", request.getBody());
-            response.setStatusCode(204, "No Content");
-        }
-        return response;
     }
 
     @Override
@@ -31,8 +13,23 @@ public class PatchContent implements Route {
     }
 
     @Override
-    public Route withData(HTTPRequest request) {
-        this.request = request;
-        return this;
+    public Response handleGET(HTTPRequest request) throws IOException {
+        Response response = new Response();
+        response.setHTTPVersion("HTTP/1.1");
+        response.setStatusCode(200, "OK");
+         if (memory.fileHasData("patch-content.txt")){
+            byte[] fileContents = memory.readFile("patch-content.txt");
+            response.setContent(fileContents);
+        }
+        return response;
+    }
+
+    @Override
+    public Response handlePATCH(HTTPRequest request) throws IOException {
+        Response response = new Response();
+        response.setHTTPVersion("HTTP/1.1");
+        response.setStatusCode(204, "No Content");
+        memory.writeToFile("patch-content.txt", request.getBody());
+        return response;
     }
 }

@@ -1,6 +1,11 @@
-public class DefaultPage implements Route {
+public class DefaultPage extends BaseRoute {
     @Override
-    public Response getResponse() {
+    public Boolean appliesTo(String uri) {
+        return uri.equals("/");
+    }
+
+    @Override
+    public Response handleGET(HTTPRequest request) {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
@@ -8,12 +13,10 @@ public class DefaultPage implements Route {
     }
 
     @Override
-    public Boolean appliesTo(String uri) {
-        return uri.equals("/");
-    }
-
-    @Override
-    public Route withData(HTTPRequest request) {
-        return this;
+    public Response handleHEAD(HTTPRequest request) {
+        Response response = new Response();
+        response.setHTTPVersion("HTTP/1.1");
+        response.setStatusCode(200, "OK");
+        return response;
     }
 }

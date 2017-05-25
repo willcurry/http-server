@@ -1,26 +1,10 @@
 import java.io.IOException;
 
-public class PartialContent implements Route {
+public class PartialContent extends BaseRoute {
     private final Memory memory;
-    private HTTPRequest request;
 
     public PartialContent(Memory memory) {
         this.memory = memory;
-    }
-
-    @Override
-    public Response getResponse() throws IOException {
-        Response response = new Response();
-        response.setHTTPVersion("HTTP/1.1");
-        response.setStatusCode(206, "OK");
-        if (request.getVerb().equals("GET"))  {
-            if (memory.fileHasData("partial_content.txt")) {
-                int[] range = findRange();
-                byte[] content = memory.readFileWithRange("partial_content.txt", range[0], range[1]);
-                response.setContent(content);
-            }
-        }
-        return response;
     }
 
     @Override
@@ -29,12 +13,19 @@ public class PartialContent implements Route {
     }
 
     @Override
-    public Route withData(HTTPRequest request) {
-        this.request = request;
-        return this;
+    public Response handleGET(HTTPRequest request) throws IOException {
+        Response response = new Response();
+        response.setHTTPVersion("HTTP/1.1");
+        response.setStatusCode(206, "OK");
+         if (memory.fileHasData("partial_content.txt")) {
+             int[] range = findRange(request);
+             byte[] content = memory.readFileWithRange("partial_content.txt", range[0], range[1]);
+             response.setContent(content);
+         }
+        return response;
     }
 
-    private int[] findRange() throws IOException {
+    private int[] findRange(HTTPRequest request) throws IOException {
         for (String header : request.getHeaders()) {
             if (header.contains("Range:")) return getRange(header);
         }

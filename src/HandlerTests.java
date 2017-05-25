@@ -2,6 +2,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class HandlerTests {
@@ -14,38 +17,44 @@ public class HandlerTests {
     }
 
     @Test
-    public void returnsDefaultPage() throws IOException {
+    public void findsDefaultPageCorrectly() throws IOException {
         setUpFakeRequest("GET", "/", "");
-        assertTrue(handler.handle(fakeRequest) instanceof DefaultPage);
+        assertThat(Util.makeString(handler.handle(fakeRequest).asByteArray()), containsString("200 OK"));
     }
 
     @Test
-    public void returnsFormRequest() throws IOException {
-        setUpFakeRequest("GET", "/form", "");
-        assertTrue(handler.handle(fakeRequest) instanceof Form);
+    public void findsFormCorrectly() throws IOException {
+        setUpFakeRequest("POST", "/form", "");
+        assertThat(Util.makeString(handler.handle(fakeRequest).asByteArray()), containsString("200 OK"));
     }
 
     @Test
-    public void returnsMethodOptionsRequest() throws IOException {
-        setUpFakeRequest("GET", "/method_options", "");
-        assertTrue(handler.handle(fakeRequest) instanceof MethodOptions);
+    public void findsMethodOptionsCorrectly() throws IOException {
+        setUpFakeRequest("OPTIONS", "/method_options", "");
+        assertThat(Util.makeString(handler.handle(fakeRequest).asByteArray()), containsString("ALLOW: GET,HEAD,POST,OPTIONS,PUT"));
     }
 
     @Test
-    public void returnsMethodOptions2Request() throws IOException {
-        setUpFakeRequest("GET", "/method_options2", "");
-        assertTrue(handler.handle(fakeRequest) instanceof MethodOptions2);
+    public void findsMethodOptions2Correctly() throws IOException {
+        setUpFakeRequest("OPTIONS", "/method_options2", "");
+        assertThat(Util.makeString(handler.handle(fakeRequest).asByteArray()), containsString("ALLOW: GET,OPTIONS"));
     }
 
     @Test
-    public void returnsRedirectRequest() throws IOException {
+    public void findsRedirectCorrectly() throws IOException {
         setUpFakeRequest("GET", "/redirect", "");
-        assertTrue(handler.handle(fakeRequest) instanceof Redirect);
+        assertThat(Util.makeString(handler.handle(fakeRequest).asByteArray()), containsString("302 Found"));
+    }
+
+    @Test
+    public void findsPatchContentCorrectly() throws IOException {
+        setUpFakeRequest("PATCH", "/patch-content.txt", "");
+        assertThat(Util.makeString(handler.handle(fakeRequest).asByteArray()), containsString("204"));
     }
 
     @Test
     public void returnsFourOhFourRequest() throws IOException {
         setUpFakeRequest("GET", "/404", "");
-        assertTrue(handler.handle(fakeRequest) instanceof FourOhFour);
+        assertThat(Util.makeString(handler.handle(fakeRequest).asByteArray()), containsString("404 Not Found"));
     }
 }

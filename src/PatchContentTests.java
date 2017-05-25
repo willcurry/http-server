@@ -23,30 +23,30 @@ public class PatchContentTests {
     @Test
     public void hasContentOfDefaultContent() throws IOException {
         setUpFakeRequest("GET", "/patch-content.txt", "");
-        patchContent.withData(fakeRequest);
-        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("default content"));
+        Response response = patchContent.handleGET(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), containsString("default content"));
     }
 
     @Test
     public void returns204NoContentAfterPatch() throws IOException {
         setUpFakeRequest("PATCH", "/patch-content.txt", "default content");
-        patchContent.withData(fakeRequest);
-        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("204"));
+        Response response = patchContent.handlePATCH(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), containsString("204"));
     }
 
     @Test
     public void patchGetPatchGet() throws IOException {
         setUpFakeRequest("PATCH", "/patch-content.txt", "hello");
-        patchContent.withData(fakeRequest);
-        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("204"));
+        Response response = patchContent.handlePATCH(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), containsString("204"));
         setUpFakeRequest("GET", "/patch-content.txt", "");
-        patchContent.withData(fakeRequest);
-        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("hello"));
+        response = patchContent.handleGET(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), containsString("hello"));
         setUpFakeRequest("PATCH", "/patch-content.txt", "default content");
-        patchContent.withData(fakeRequest);
-        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("204"));
+        response = patchContent.handlePATCH(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), containsString("204"));
         setUpFakeRequest("GET", "/patch-content.txt", "");
-        patchContent.withData(fakeRequest);
-        assertThat(Util.makeString(patchContent.getResponse().asByteArray()), containsString("default content"));
+        response = patchContent.handleGET(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), containsString("default content"));
     }
 }

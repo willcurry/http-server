@@ -34,8 +34,8 @@ public class PartialContentTests {
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
-        partialContent.withData(fakeRequest);
-        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), is("HTTP/1.1 206 OK\nContent-Type: text/plain\nContent-Length: 5\n\nThis "));
+        Response response = partialContent.handleGET(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), is("HTTP/1.1 206 OK\nContent-Type: text/plain\nContent-Length: 5\n\nThis "));
     }
 
     @Test
@@ -48,8 +48,8 @@ public class PartialContentTests {
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
-        partialContent.withData(fakeRequest);
-        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), is("HTTP/1.1 206 OK\nContent-Type: text/plain\nContent-Length: 5\n\nThis "));
+        Response response = partialContent.handleGET(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), is("HTTP/1.1 206 OK\nContent-Type: text/plain\nContent-Length: 5\n\nThis "));
     }
 
     @Test
@@ -62,8 +62,8 @@ public class PartialContentTests {
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
-        partialContent.withData(fakeRequest);
-        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), containsString("\n\n is a file that contains text to read part of in order to fulfill a 206.\n"));
+        Response response = partialContent.handleGET(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), containsString("\n\n is a file that contains text to read part of in order to fulfill a 206.\n"));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class PartialContentTests {
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
-        partialContent.withData(fakeRequest);
-        assertThat(Util.makeString(partialContent.getResponse().asByteArray()), containsString("\n\n 206.\n"));
+        Response response = partialContent.handleGET(fakeRequest);
+        assertThat(Util.makeString(response.asByteArray()), containsString("\n\n 206.\n"));
     }
 }

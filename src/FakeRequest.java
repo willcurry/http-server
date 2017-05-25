@@ -9,6 +9,7 @@ public class FakeRequest implements HTTPRequest {
     private ArrayList<String> headers;
 
     public FakeRequest(String verb, String uri, String httpVersion, String body) {
+        System.out.print(uri);
         this.uri = uri;
         this.verb = verb;
         this.httpVersion = httpVersion;

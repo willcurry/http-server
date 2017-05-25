@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Request implements HTTPRequest {
     private final Reader input;
