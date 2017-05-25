@@ -15,7 +15,7 @@ public class PatchContent implements Route {
         response.setStatusCode(200, "OK");
         if (request.getVerb().equals("GET"))  {
             if (memory.fileHasData("patch-content.txt")){
-                String fileContents = Util.makeString(memory.readFile("patch-content.txt"));
+                byte[] fileContents = memory.readFile("patch-content.txt");
                 response.setContent(fileContents);
             }
         } else if (request.getVerb().equals("PATCH")) {

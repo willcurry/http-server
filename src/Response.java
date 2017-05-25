@@ -19,8 +19,8 @@ public class Response {
         this.header = header;
     }
 
-    public void setContent(String content) {
-        this.content = content.getBytes();
+    public void setContent(byte[] content) {
+        this.content = content;
     }
 
     public byte[] asByteArray() {

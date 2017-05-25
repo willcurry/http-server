@@ -14,7 +14,7 @@ public class Form implements Route {
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
         if (request.getVerb().equals("GET"))  {
-            if (memory.hasData()) response.setContent(memory.getData());
+            if (memory.hasData()) response.setContent(memory.getData().getBytes());
         } else if (request.getVerb().equals("POST") || request.getVerb().equals("PUT")) {
             memory.saveData(request.getBody());
         } else if (request.getVerb().equals("DELETE")) {

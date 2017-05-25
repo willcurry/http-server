@@ -16,7 +16,7 @@ public class PartialContent implements Route {
         if (request.getVerb().equals("GET"))  {
             if (memory.fileHasData("partial_content.txt")) {
                 int[] range = findRange();
-                String content = Util.makeString(memory.readFileWithRange("partial_content.txt", range[0], range[1]));
+                byte[] content = memory.readFileWithRange("partial_content.txt", range[0], range[1]);
                 response.setContent(content);
             }
         }
