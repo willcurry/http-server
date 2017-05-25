@@ -37,7 +37,7 @@ public class Request implements HTTPRequest {
 
     @Override
     public String getURI() throws IOException {
-        return requestStringSplit[1];
+        return parseURI(requestStringSplit[1])[0];
     }
 
     @Override
@@ -61,6 +61,22 @@ public class Request implements HTTPRequest {
             if (header.contains("Content-Length:")) return findBody(header);
         }
         return "";
+    }
+
+    @Override
+    public String[] getURIParameters() {
+        String[] parameters = parseURI(requestStringSplit[1])[1].split("&");
+        return parameters;
+    }
+
+    private String[] parseURI(String uri) {
+        String[] uriWithNoParameters = new String[1];
+        uriWithNoParameters[0] = uri;
+        if (uri.contains("?")) {
+             String[] splitURI = uri.split("\\?");
+             return splitURI;
+        }
+        return uriWithNoParameters;
     }
 
     private String findBody(String header) throws IOException {

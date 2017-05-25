@@ -18,8 +18,10 @@ public class Handler {
         routes.add(new Redirect());
         routes.add(new PatchContent(memory));
         routes.add(new PartialContent(memory));
-        routes.add(new File1());
+        routes.add(new File1(memory));
         routes.add(new TextFile());
+        routes.add(new Tea());
+        routes.add(new Coffee());
     }
 
     public Response handle(HTTPRequest request) throws IOException {
