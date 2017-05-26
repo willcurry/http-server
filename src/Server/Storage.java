@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Storage {
     private final String directory;
@@ -61,5 +62,14 @@ public class Storage {
 
     public Path getPath(String path) {
         return Paths.get(directory + path);
+    }
+
+    public ArrayList<String> allFileNames() throws IOException {
+        ArrayList<String> names = new ArrayList<>();
+        for (Path path : allFiles()) {
+            String[] pathSplit = path.toString().split(directory);
+            if (pathSplit.length > 1) names.add(pathSplit[1]);
+        }
+        return names;
     }
 }

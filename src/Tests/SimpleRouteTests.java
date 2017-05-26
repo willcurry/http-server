@@ -1,6 +1,7 @@
 package Tests;
 
 import Routes.CoffeeRoute;
+import Routes.DefaultPageRoute;
 import Routes.PublicFilesRoute;
 import Routes.TeaRoute;
 import Server.Storage;
@@ -9,8 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
 public class SimpleRouteTests {
@@ -18,10 +21,11 @@ public class SimpleRouteTests {
     private PublicFilesRoute files;
     private CoffeeRoute coffee;
     private Parameters parameters;
+    private Storage storage;
 
     @Before
     public void before() {
-        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        storage = new Storage("/Users/willcurry/cob_spec/public_test/");
         files = new PublicFilesRoute(storage);
         tea = new TeaRoute();
         coffee = new CoffeeRoute();
@@ -69,5 +73,12 @@ public class SimpleRouteTests {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff", "");
         String body = "variable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"?" + "variable_2 = stuff";
         assertThat(TestUtil.makeString(parameters.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: " + body.length() + "\n\n" + body));
+    }
+
+    @Test
+    public void getOnDefaultPageReturnsAllFiles() throws IOException {
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/", "");
+        DefaultPageRoute defaultPageRoute = new DefaultPageRoute(storage);
+        assertThat(TestUtil.makeString(defaultPageRoute.handleGET(fakeRequest).asByteArray()), containsString("\n\ntext-file.txt"));
     }
 }

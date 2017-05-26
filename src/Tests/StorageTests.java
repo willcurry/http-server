@@ -9,9 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class StorageTests {
     private Storage storage;
@@ -72,5 +70,13 @@ public class StorageTests {
     @Test
     public void canReadAnImageFile() throws IOException {
         assertThat(storage.readFile("image.jpeg"), is(Files.readAllBytes(Paths.get("/Users/willcurry/cob_spec/public_test/image.jpeg"))));
+    }
+
+    @Test
+    public void knowsAllFileNames() throws IOException {
+        assertTrue(storage.allFileNames().contains("file1"));
+        assertTrue(storage.allFileNames().contains("text-file.txt"));
+        assertTrue(storage.allFileNames().contains("empty.txt"));
+        assertFalse(storage.allFileNames().contains("fake file !!!"));
     }
 }

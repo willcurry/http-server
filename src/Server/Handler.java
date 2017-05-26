@@ -11,7 +11,7 @@ public class Handler {
     public Handler() {
         Storage storage = new Storage("/Users/willcurry/cob_spec/public/");
         routes = new ArrayList<>();
-        routes.add(new DefaultPageRoute());
+        routes.add(new DefaultPageRoute(storage));
         routes.add(new FormRoute(storage));
         routes.add(new MethodOptions2Route());
         routes.add(new MethodOptionsRoute());
