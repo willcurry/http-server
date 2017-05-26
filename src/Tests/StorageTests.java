@@ -5,10 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class StorageTests {
     private Storage storage;
@@ -64,5 +67,10 @@ public class StorageTests {
     @Test
     public void knowsFilesInADirectory() throws IOException {
         assertThat(storage.allFiles().toString(), is("[/Users/willcurry/cob_spec/public_test, /Users/willcurry/cob_spec/public_test/.DS_Store, /Users/willcurry/cob_spec/public_test/empty.txt, /Users/willcurry/cob_spec/public_test/file1, /Users/willcurry/cob_spec/public_test/file2, /Users/willcurry/cob_spec/public_test/image.gif, /Users/willcurry/cob_spec/public_test/image.jpeg, /Users/willcurry/cob_spec/public_test/image.png, /Users/willcurry/cob_spec/public_test/partial_content.txt, /Users/willcurry/cob_spec/public_test/patch-content.txt, /Users/willcurry/cob_spec/public_test/test-file.txt, /Users/willcurry/cob_spec/public_test/text-file.txt]"));
+    }
+
+    @Test
+    public void canReadAnImageFile() throws IOException {
+        assertThat(storage.readFile("image.jpeg"), is(Files.readAllBytes(Paths.get("/Users/willcurry/cob_spec/public_test/image.jpeg"))));
     }
 }

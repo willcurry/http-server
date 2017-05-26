@@ -8,6 +8,11 @@ public class Response {
     private String statusCode;
     private String header;
     private byte[] content;
+    private String contentType;
+
+    public Response() {
+        contentType = "text/plain";
+    }
 
     public void setHTTPVersion(String version) {
         this.version = version;
@@ -23,6 +28,10 @@ public class Response {
 
     public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     public byte[] asByteArray() {
@@ -41,7 +50,7 @@ public class Response {
     private byte[] content() throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         if (content != null) {
-            String header = "\nContent-Type: text/plain\nContent-Length: " + content.length + "\n\n";
+            String header = "\nContent-Type: " + contentType + "\nContent-Length: " + content.length + "\n\n";
             byteArrayOutputStream.write(header.getBytes());
             byteArrayOutputStream.write(content);
         }

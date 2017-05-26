@@ -23,6 +23,7 @@ public class Handler {
         routes.add(new TeaRoute());
         routes.add(new CoffeeRoute());
         routes.add(new Parameters());
+        routes.add(new PublicFilesRoute(storage));
     }
 
     public Response handle(HTTPRequest request) throws IOException {
