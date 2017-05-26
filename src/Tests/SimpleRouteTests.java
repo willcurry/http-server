@@ -79,6 +79,6 @@ public class SimpleRouteTests {
     public void getOnDefaultPageReturnsAllFiles() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/", "");
         DefaultPageRoute defaultPageRoute = new DefaultPageRoute(storage);
-        assertThat(TestUtil.makeString(defaultPageRoute.handleGET(fakeRequest).asByteArray()), containsString("\n\ntext-file.txt"));
+        assertThat(TestUtil.makeString(defaultPageRoute.handleGET(fakeRequest).asByteArray()), containsString("patch-content.txt\ntest-file.txt\ntext-file.txt"));
     }
 }

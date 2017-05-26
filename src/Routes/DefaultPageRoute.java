@@ -24,6 +24,9 @@ public class DefaultPageRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
+        String body = "";
+        for (String fileName : storage.allFileNames()) body += fileName + "\n";
+        response.setContent(body.getBytes());
         return response;
     }
 
