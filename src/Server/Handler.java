@@ -18,8 +18,6 @@ public class Handler {
         routes.add(new RedirectRoute());
         routes.add(new PatchContentRoute(storage));
         routes.add(new PartialContentRoute(storage));
-        routes.add(new File1Route(storage));
-        routes.add(new TextFileRoute(storage));
         routes.add(new TeaRoute());
         routes.add(new CoffeeRoute());
         routes.add(new Parameters());

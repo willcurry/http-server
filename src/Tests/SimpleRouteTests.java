@@ -1,9 +1,8 @@
 package Tests;
 
 import Routes.CoffeeRoute;
-import Routes.File1Route;
+import Routes.PublicFilesRoute;
 import Routes.TeaRoute;
-import Routes.TextFileRoute;
 import Server.Storage;
 import Server.Parameters;
 import org.junit.Before;
@@ -15,17 +14,15 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class SimpleRouteTests {
-    private TextFileRoute textFile;
-    private File1Route file1;
     private TeaRoute tea;
+    private PublicFilesRoute files;
     private CoffeeRoute coffee;
     private Parameters parameters;
 
     @Before
     public void before() {
         Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
-        textFile = new TextFileRoute(storage);
-        file1 = new File1Route(storage);
+        files = new PublicFilesRoute(storage);
         tea = new TeaRoute();
         coffee = new CoffeeRoute();
         parameters = new Parameters();
@@ -34,25 +31,25 @@ public class SimpleRouteTests {
     @Test
     public void getOnTextFileReturns200Response() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/text-file.txt", "");
-        assertThat(TestUtil.makeString(textFile.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 14\n\nfile1 contents"));
+        assertThat(TestUtil.makeString(files.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 14\n\nfile1 contents"));
     }
 
     @Test
     public void postOnTextFileReturns405Response() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("POST", "/text-file.txt", "");
-        assertThat(TestUtil.makeString(textFile.handlePOST(fakeRequest).asByteArray()), is("HTTP/1.1 405 Method Not Allowed"));
+        assertThat(TestUtil.makeString(files.handlePOST(fakeRequest).asByteArray()), is("HTTP/1.1 405 Method Not Allowed"));
     }
 
     @Test
     public void getOnFile1Returns200Response() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/file1", "");
-        assertThat(TestUtil.makeString(file1.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 14\n\nfile1 contents"));
+        assertThat(TestUtil.makeString(files.handleGET(fakeRequest).asByteArray()), is("HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 14\n\nfile1 contents"));
     }
 
     @Test
     public void postOnFile1Returns405Response() throws IOException {
-        FakeRequest fakeRequest = TestUtil.createFakeRequest("POST", "/file1", "");
-        assertThat(TestUtil.makeString(file1.handlePOST(fakeRequest).asByteArray()), is("HTTP/1.1 405 Method Not Allowed"));
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("POST", "/files", "");
+        assertThat(TestUtil.makeString(files.handlePOST(fakeRequest).asByteArray()), is("HTTP/1.1 405 Method Not Allowed"));
     }
 
     @Test
