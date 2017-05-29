@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
@@ -86,16 +87,15 @@ public class SimpleRouteTests {
 
     @Test
     public void getOnCookieReturnsEatInContent() throws IOException {
-        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/cookie", "");
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/cookie?type=chocolate", "");
         CookieRoute cookieRoute = new CookieRoute(storage);
         assertThat(TestUtil.makeString(cookieRoute.handleGET(fakeRequest).asByteArray()), containsString("Eat"));
     }
 
     @Test
     public void getOnCookieReturnsCookieWithStorageData() throws IOException {
-        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/cookie", "");
-        storage.saveData("Hello");
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/cookie?type=chocolate", "");
         CookieRoute cookieRoute = new CookieRoute(storage);
-        assertThat(TestUtil.makeString(cookieRoute.handleGET(fakeRequest).asByteArray()), containsString("Set-Cookie: Hello"));
+        assertThat(TestUtil.makeString(cookieRoute.handleGET(fakeRequest).asByteArray()), containsString("Set-Cookie: type = chocolate"));
     }
 }

@@ -3,12 +3,15 @@ package Routes;
 import Server.HTTPRequest;
 import Server.Response;
 import Server.Storage;
+import sun.security.x509.X509CertInfo;
 
 import java.io.IOException;
 
 public class EatCookieRoute extends BaseRoute {
-    public EatCookieRoute(Storage storage) {
+    private final Storage storage;
 
+    public EatCookieRoute(Storage storage) {
+        this.storage = storage;
     }
 
     @Override
@@ -21,7 +24,18 @@ public class EatCookieRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        response.setContent("mmmm chocolate".getBytes());
+        if (getHeaderCookie(request).equals(storage.getData())) {
+            response.setContent("mmmm chocolate".getBytes());
+        }
         return response;
+    }
+
+    public String getHeaderCookie(HTTPRequest request) throws IOException {
+        for (String header : request.getHeaders()) {
+            if (header.contains("Cookie:")) {
+                return header.split(":")[1].trim();
+            }
+        }
+        return "";
     }
 }
