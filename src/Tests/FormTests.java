@@ -1,7 +1,7 @@
 package Tests;
 
-import Routes.Form;
-import Server.Memory;
+import Routes.FormRoute;
+import Server.Storage;
 import Server.Response;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,12 +13,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public class FormTests {
-    private Form form;
+    private FormRoute form;
 
     @Before
     public void before() {
-        Memory memory = new Memory("/Users/willcurry/cob_spec/public_test/");
-        form = new Form(memory);
+        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        form = new FormRoute(storage);
     }
 
     @Test

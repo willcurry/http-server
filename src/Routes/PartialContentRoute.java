@@ -1,16 +1,16 @@
 package Routes;
 
 import Server.HTTPRequest;
-import Server.Memory;
+import Server.Storage;
 import Server.Response;
 
 import java.io.IOException;
 
-public class PartialContent extends BaseRoute {
-    private final Memory memory;
+public class PartialContentRoute extends BaseRoute {
+    private final Storage storage;
 
-    public PartialContent(Memory memory) {
-        this.memory = memory;
+    public PartialContentRoute(Storage storage) {
+        this.storage = storage;
     }
 
     @Override
@@ -23,9 +23,9 @@ public class PartialContent extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(206, "OK");
-         if (memory.fileHasData("partial_content.txt")) {
+         if (storage.fileHasData("partial_content.txt")) {
              int[] range = findRange(request);
-             byte[] content = memory.readFileWithRange("partial_content.txt", range[0], range[1]);
+             byte[] content = storage.readFileWithRange("partial_content.txt", range[0], range[1]);
              response.setContent(content);
          }
         return response;
@@ -39,7 +39,7 @@ public class PartialContent extends BaseRoute {
     }
 
     private int[] getRange(String header) throws IOException {
-        byte[] content = memory.readFile("partial_content.txt");
+        byte[] content = storage.readFile("partial_content.txt");
         String rangeString = header.trim().split("=")[1];
         String[] ints = rangeString.split("-", 2);
         int[] range = new int[2];

@@ -9,4 +9,6 @@ public interface HTTPRequest {
     String getHTTPVersion() throws IOException;
     ArrayList<String> getHeaders() throws IOException;
     String getBody() throws IOException;
+
+    String[] getURIParameters();
 }
