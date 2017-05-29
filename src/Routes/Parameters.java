@@ -1,6 +1,7 @@
-package Server;
+package Routes;
 
-import Routes.BaseRoute;
+import Server.HTTPRequest;
+import Server.Response;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

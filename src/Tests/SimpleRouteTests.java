@@ -5,12 +5,11 @@ import Routes.DefaultPageRoute;
 import Routes.PublicFilesRoute;
 import Routes.TeaRoute;
 import Server.Storage;
-import Server.Parameters;
+import Routes.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
@@ -76,9 +75,9 @@ public class SimpleRouteTests {
     }
 
     @Test
-    public void getOnDefaultPageReturnsAllFiles() throws IOException {
+    public void getOnDefaultPageReturnsAllFilesWithLinks() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/", "");
         DefaultPageRoute defaultPageRoute = new DefaultPageRoute(storage);
-        assertThat(TestUtil.makeString(defaultPageRoute.handleGET(fakeRequest).asByteArray()), containsString("patch-content.txt\ntest-file.txt\ntext-file.txt"));
+        assertThat(TestUtil.makeString(defaultPageRoute.handleGET(fakeRequest).asByteArray()), containsString("<a href=\"/patch-content.txt\">patch-content.txt</a>"));
     }
 }
