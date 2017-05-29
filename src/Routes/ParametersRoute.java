@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-public class Parameters extends BaseRoute {
+public class ParametersRoute extends BaseRoute {
     @Override
     public Boolean appliesTo(String uri) {
         return (uri.equals("/parameters"));

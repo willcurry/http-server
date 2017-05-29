@@ -1,11 +1,7 @@
 package Tests;
 
-import Routes.CoffeeRoute;
-import Routes.DefaultPageRoute;
-import Routes.PublicFilesRoute;
-import Routes.TeaRoute;
+import Routes.*;
 import Server.Storage;
-import Routes.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +15,7 @@ public class SimpleRouteTests {
     private TeaRoute tea;
     private PublicFilesRoute files;
     private CoffeeRoute coffee;
-    private Parameters parameters;
+    private ParametersRoute parameters;
     private Storage storage;
 
     @Before
@@ -28,7 +24,7 @@ public class SimpleRouteTests {
         files = new PublicFilesRoute(storage);
         tea = new TeaRoute();
         coffee = new CoffeeRoute();
-        parameters = new Parameters();
+        parameters = new ParametersRoute();
     }
 
     @Test
@@ -79,5 +75,27 @@ public class SimpleRouteTests {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/", "");
         DefaultPageRoute defaultPageRoute = new DefaultPageRoute(storage);
         assertThat(TestUtil.makeString(defaultPageRoute.handleGET(fakeRequest).asByteArray()), containsString("<a href=\"/patch-content.txt\">patch-content.txt</a>"));
+    }
+
+    @Test
+    public void getOnEatCookieReturnsMmmmChocolate() throws IOException {
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/eat_cookie", "");
+        EatCookieRoute eatCookieRoute = new EatCookieRoute(storage);
+        assertThat(TestUtil.makeString(eatCookieRoute.handleGET(fakeRequest).asByteArray()), containsString("mmmm chocolate"));
+    }
+
+    @Test
+    public void getOnCookieReturnsEatInContent() throws IOException {
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/cookie", "");
+        CookieRoute cookieRoute = new CookieRoute(storage);
+        assertThat(TestUtil.makeString(cookieRoute.handleGET(fakeRequest).asByteArray()), containsString("Eat"));
+    }
+
+    @Test
+    public void getOnCookieReturnsCookieWithStorageData() throws IOException {
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/cookie", "");
+        storage.saveData("Hello");
+        CookieRoute cookieRoute = new CookieRoute(storage);
+        assertThat(TestUtil.makeString(cookieRoute.handleGET(fakeRequest).asByteArray()), containsString("Set-Cookie: Hello"));
     }
 }

@@ -20,8 +20,11 @@ public class Handler {
         routes.add(new PartialContentRoute(storage));
         routes.add(new TeaRoute());
         routes.add(new CoffeeRoute());
-        routes.add(new Parameters());
+        routes.add(new ParametersRoute());
         routes.add(new PublicFilesRoute(storage));
+        Storage cookieStorage = new Storage("/Users/willcurry/cob_spec/public/");
+        routes.add(new EatCookieRoute(storage));
+        routes.add(new CookieRoute(storage));
     }
 
     public Response handle(HTTPRequest request) throws IOException {
