@@ -1,6 +1,6 @@
 package Tests;
 
-import Routes.LogsRoute;
+import Server.Routes.LogsRoute;
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import org.junit.Test;
 

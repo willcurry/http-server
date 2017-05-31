@@ -1,6 +1,6 @@
 package Tests;
 
-import Routes.FormRoute;
+import Server.Routes.FormRoute;
 import Server.Response;
 import Server.Storage;
 import org.junit.Before;

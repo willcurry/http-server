@@ -1,4 +1,4 @@
-package Routes;
+package Server.Routes;
 
 import Server.HTTPRequest;
 import Server.Response;

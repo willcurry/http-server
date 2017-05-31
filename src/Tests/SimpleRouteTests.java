@@ -1,6 +1,6 @@
 package Tests;
 
-import Routes.*;
+import Server.Routes.*;
 import Server.Storage;
 import org.junit.Before;
 import org.junit.Test;

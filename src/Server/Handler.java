@@ -1,6 +1,6 @@
 package Server;
 
-import Routes.*;
+import Server.Routes.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,12 +1,12 @@
-package Routes;
+package Server.Routes;
 
 import Server.HTTPRequest;
 import Server.Response;
 
-public class MethodOptionsRoute extends BaseRoute {
+public class MethodOptions2Route extends BaseRoute {
     @Override
     public Boolean appliesTo(String uri) {
-        return uri.equals("/method_options");
+        return uri.equals("/method_options2");
     }
 
     @Override
@@ -22,7 +22,7 @@ public class MethodOptionsRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        response.setHeader("ALLOW: GET,HEAD,POST,OPTIONS,PUT");
+        response.setHeader("ALLOW: GET,OPTIONS");
         return response;
     }
 }

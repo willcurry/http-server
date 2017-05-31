@@ -1,6 +1,6 @@
 package Tests;
 
-import Routes.PatchContentRoute;
+import Server.Routes.PatchContentRoute;
 import Server.Response;
 import Server.Storage;
 import org.junit.Before;

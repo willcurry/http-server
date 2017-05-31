@@ -1,6 +1,6 @@
 package Tests;
 
-import Routes.PublicFilesRoute;
+import Server.Routes.PublicFilesRoute;
 import Server.Storage;
 import org.junit.Before;
 import org.junit.Test;
