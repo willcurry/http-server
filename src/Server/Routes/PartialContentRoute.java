@@ -1,8 +1,8 @@
-package Routes;
+package Server.Routes;
 
 import Server.HTTPRequest;
-import Server.Storage;
 import Server.Response;
+import Server.Storage;
 
 import java.io.IOException;
 

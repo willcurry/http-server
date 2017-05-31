@@ -1,6 +1,6 @@
 package Server;
 
-import Routes.*;
+import Server.Routes.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ public class Handler {
     private ArrayList<BaseRoute> routes;
 
     public Handler() {
-        Storage storage = new Storage("/Users/willcurry/cob_spec/public/");
+        Storage storage = new Storage("src/public/");
         routes = new ArrayList<>();
         routes.add(new DefaultPageRoute(storage));
         routes.add(new FormRoute(storage));
@@ -20,8 +20,12 @@ public class Handler {
         routes.add(new PartialContentRoute(storage));
         routes.add(new TeaRoute());
         routes.add(new CoffeeRoute());
-        routes.add(new Parameters());
+        routes.add(new ParametersRoute());
         routes.add(new PublicFilesRoute(storage));
+        Storage cookieStorage = new Storage("src/public/");
+        routes.add(new EatCookieRoute(cookieStorage));
+        routes.add(new CookieRoute(cookieStorage));
+        routes.add(new LogsRoute());
     }
 
     public Response handle(HTTPRequest request) throws IOException {

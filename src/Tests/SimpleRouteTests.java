@@ -1,15 +1,12 @@
 package Tests;
 
-import Routes.CoffeeRoute;
-import Routes.DefaultPageRoute;
-import Routes.PublicFilesRoute;
-import Routes.TeaRoute;
+import Server.Routes.*;
 import Server.Storage;
-import Routes.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
@@ -19,16 +16,16 @@ public class SimpleRouteTests {
     private TeaRoute tea;
     private PublicFilesRoute files;
     private CoffeeRoute coffee;
-    private Parameters parameters;
+    private ParametersRoute parameters;
     private Storage storage;
 
     @Before
     public void before() {
-        storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        storage = new Storage("src/public_test/");
         files = new PublicFilesRoute(storage);
         tea = new TeaRoute();
         coffee = new CoffeeRoute();
-        parameters = new Parameters();
+        parameters = new ParametersRoute();
     }
 
     @Test
@@ -79,5 +76,30 @@ public class SimpleRouteTests {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/", "");
         DefaultPageRoute defaultPageRoute = new DefaultPageRoute(storage);
         assertThat(TestUtil.makeString(defaultPageRoute.handleGET(fakeRequest).asByteArray()), containsString("<a href=\"/patch-content.txt\">patch-content.txt</a>"));
+    }
+
+    @Test
+    public void getOnEatCookieReturnsMmmmChocolate() throws IOException {
+        ArrayList<String> headers = new ArrayList<>();
+        headers.add("Cookie: type = chocolate");
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/eat_cookie", "");
+        fakeRequest.setHeaders(headers);
+        storage.saveData("type = chocolate");
+        EatCookieRoute eatCookieRoute = new EatCookieRoute(storage);
+        assertThat(TestUtil.makeString(eatCookieRoute.handleGET(fakeRequest).asByteArray()), containsString("mmmm chocolate"));
+    }
+
+    @Test
+    public void getOnCookieReturnsEatInContent() throws IOException {
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/cookie?type=chocolate", "");
+        CookieRoute cookieRoute = new CookieRoute(storage);
+        assertThat(TestUtil.makeString(cookieRoute.handleGET(fakeRequest).asByteArray()), containsString("Eat"));
+    }
+
+    @Test
+    public void getOnCookieReturnsCookieWithStorageData() throws IOException {
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/cookie?type=chocolate", "");
+        CookieRoute cookieRoute = new CookieRoute(storage);
+        assertThat(TestUtil.makeString(cookieRoute.handleGET(fakeRequest).asByteArray()), containsString("Set-Cookie: type = chocolate"));
     }
 }

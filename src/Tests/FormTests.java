@@ -1,8 +1,8 @@
 package Tests;
 
-import Routes.FormRoute;
-import Server.Storage;
+import Server.Routes.FormRoute;
 import Server.Response;
+import Server.Storage;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class FormTests {
 
     @Before
     public void before() {
-        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        Storage storage = new Storage("src/public_test/");
         form = new FormRoute(storage);
     }
 

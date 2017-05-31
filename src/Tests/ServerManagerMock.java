@@ -1,6 +1,6 @@
 package Tests;
 
-import Server.HTTPServerManager;
+import Server.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,15 +9,12 @@ import java.io.OutputStream;
 public class ServerManagerMock implements HTTPServerManager {
     private final BufferedReader input;
     private final OutputStream output;
+    private final Handler handler;
 
     public ServerManagerMock(BufferedReader input, OutputStream output) {
         this.input = input;
         this.output = output;
-    }
-
-    @Override
-    public BufferedReader getInputStream() {
-        return this.input;
+        this.handler = new Handler();
     }
 
     @Override
@@ -26,13 +23,14 @@ public class ServerManagerMock implements HTTPServerManager {
     }
 
     @Override
-    public void acceptRequests() throws IOException {
-
+    public void sendResponse() throws IOException {
+        output.write(getResponse(input).asByteArray());
+        output.flush();
     }
 
-    @Override
-    public void output(byte[] message) throws IOException {
-        output.write(message);
-        output.flush();
+    private Response getResponse(BufferedReader input) throws IOException {
+        Request request = new Request(input);
+        Logger.log(request);
+        return handler.handle(request);
     }
 }

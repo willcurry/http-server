@@ -1,6 +1,6 @@
 package Tests;
 
-import Routes.PublicFilesRoute;
+import Server.Routes.PublicFilesRoute;
 import Server.Storage;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class PublicFilesRouteTest  {
 
     @Before
     public void before() {
-        storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        storage = new Storage("src/public_test/");
         publicFilesRoute = new PublicFilesRoute(storage);
     }
 

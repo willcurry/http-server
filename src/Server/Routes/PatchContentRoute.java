@@ -1,22 +1,21 @@
-package Routes;
+package Server.Routes;
 
 import Server.HTTPRequest;
 import Server.Response;
 import Server.Storage;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
-public class DefaultPageRoute extends BaseRoute {
+public class PatchContentRoute extends BaseRoute {
     private final Storage storage;
 
-    public DefaultPageRoute(Storage storage) {
+    public PatchContentRoute(Storage storage) {
         this.storage = storage;
     }
 
     @Override
     public Boolean appliesTo(String uri) {
-        return uri.equals("/");
+        return (uri.equals("/patch-content.txt"));
     }
 
     @Override
@@ -24,22 +23,19 @@ public class DefaultPageRoute extends BaseRoute {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
-        response.setContentType("text/html");
-        String body = "";
-        for (String fileName : storage.allFileNames()) {
-            String urlToFile = "<a href=\"/" + fileName + "\">" + fileName + "</a>\n";
-            body += urlToFile;
+         if (storage.fileHasData("patch-content.txt")){
+            byte[] fileContents = storage.readFile("patch-content.txt");
+            response.setContent(fileContents);
         }
-        response.setContent(body.getBytes());
         return response;
     }
 
     @Override
-    public Response handleHEAD(HTTPRequest request) {
+    public Response handlePATCH(HTTPRequest request) throws IOException {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
-        response.setStatusCode(200, "OK");
+        response.setStatusCode(204, "No Content");
+        storage.writeToFile("patch-content.txt", request.getBody());
         return response;
     }
-
 }
