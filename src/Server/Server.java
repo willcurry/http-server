@@ -2,32 +2,32 @@ package Server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     private final int port;
     private final HTTPServerManager serverManager;
-    private Handler handler;
+    private final ExecutorService executor;
     private Listener exitListener;
 
     public Server(int port, Listener exitListener, HTTPServerManager serverManager) {
-        handler = new Handler();
         this.exitListener = exitListener;
         this.port = port;
         this.serverManager = serverManager;
-    }
-
-    private Response getResponse(BufferedReader input) throws IOException {
-        Request request = new Request(input);
-        Logger.log(request);
-        return handler.handle(request);
+        this.executor = Executors.newFixedThreadPool(5);
     }
 
     public void run() throws IOException {
         serverManager.setUp(port);
         while (hasNotQuit()) {
-            serverManager.acceptRequests();
-            Response response = getResponse(serverManager.getInputStream());
-            serverManager.output(response.asByteArray());
+            executor.submit(() -> {
+                try {
+                    serverManager.sendResponse();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 

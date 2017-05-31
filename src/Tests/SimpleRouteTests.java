@@ -21,7 +21,7 @@ public class SimpleRouteTests {
 
     @Before
     public void before() {
-        storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        storage = new Storage("src/public_test/");
         files = new PublicFilesRoute(storage);
         tea = new TeaRoute();
         coffee = new CoffeeRoute();

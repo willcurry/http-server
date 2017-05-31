@@ -9,7 +9,7 @@ public class Handler {
     private ArrayList<BaseRoute> routes;
 
     public Handler() {
-        Storage storage = new Storage("/Users/willcurry/cob_spec/public/");
+        Storage storage = new Storage("src/public/");
         routes = new ArrayList<>();
         routes.add(new DefaultPageRoute(storage));
         routes.add(new FormRoute(storage));
@@ -22,7 +22,7 @@ public class Handler {
         routes.add(new CoffeeRoute());
         routes.add(new ParametersRoute());
         routes.add(new PublicFilesRoute(storage));
-        Storage cookieStorage = new Storage("/Users/willcurry/cob_spec/public/");
+        Storage cookieStorage = new Storage("src/public/");
         routes.add(new EatCookieRoute(cookieStorage));
         routes.add(new CookieRoute(cookieStorage));
         routes.add(new LogsRoute());

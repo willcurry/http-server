@@ -16,7 +16,7 @@ public class StorageTests {
 
     @Before
     public void before() {
-        storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        storage = new Storage("src/public_test/");
     }
     @Test
     public void canSaveAndGetData() {
@@ -64,12 +64,12 @@ public class StorageTests {
 
     @Test
     public void knowsFilesInADirectory() throws IOException {
-        assertThat(storage.allFiles().toString(), is("[/Users/willcurry/cob_spec/public_test, /Users/willcurry/cob_spec/public_test/.DS_Store, /Users/willcurry/cob_spec/public_test/empty.txt, /Users/willcurry/cob_spec/public_test/file1, /Users/willcurry/cob_spec/public_test/file2, /Users/willcurry/cob_spec/public_test/image.gif, /Users/willcurry/cob_spec/public_test/image.jpeg, /Users/willcurry/cob_spec/public_test/image.png, /Users/willcurry/cob_spec/public_test/partial_content.txt, /Users/willcurry/cob_spec/public_test/patch-content.txt, /Users/willcurry/cob_spec/public_test/test-file.txt, /Users/willcurry/cob_spec/public_test/text-file.txt]"));
+        assertThat(storage.allFiles().toString(), is("[src/public_test, src/public_test/empty.txt, src/public_test/file1, src/public_test/file2, src/public_test/image.gif, src/public_test/image.jpeg, src/public_test/image.png, src/public_test/partial_content.txt, src/public_test/patch-content.txt, src/public_test/test-file.txt, src/public_test/text-file.txt]"));
     }
 
     @Test
     public void canReadAnImageFile() throws IOException {
-        assertThat(storage.readFile("image.jpeg"), is(Files.readAllBytes(Paths.get("/Users/willcurry/cob_spec/public_test/image.jpeg"))));
+        assertThat(storage.readFile("image.jpeg"), is(Files.readAllBytes(Paths.get("src/public_test/image.jpeg"))));
     }
 
     @Test

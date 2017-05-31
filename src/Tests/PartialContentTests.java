@@ -20,7 +20,7 @@ public class PartialContentTests {
     @Before
     public void before() {
         headers = new ArrayList<>();
-        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        Storage storage = new Storage("src/public_test/");
         partialContent = new PartialContentRoute(storage);
     }
 

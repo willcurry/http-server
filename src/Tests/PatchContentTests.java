@@ -16,7 +16,7 @@ public class PatchContentTests {
 
     @Before
     public void before() {
-        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        Storage storage = new Storage("src/public_test/");
         patchContent = new PatchContentRoute(storage);
     }
 

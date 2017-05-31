@@ -17,7 +17,7 @@ public class FormTests {
 
     @Before
     public void before() {
-        Storage storage = new Storage("/Users/willcurry/cob_spec/public_test/");
+        Storage storage = new Storage("src/public_test/");
         form = new FormRoute(storage);
     }
 
