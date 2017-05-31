@@ -69,4 +69,10 @@ public class HandlerTests {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("POST", "/text-file.txt", "");
         assertThat(TestUtil.makeString(handler.handle(fakeRequest).asByteArray()), containsString("405"));
     }
+
+    @Test
+    public void findsLogsCorrectly() throws IOException {
+        FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/logs", "");
+        assertThat(TestUtil.makeString(handler.handle(fakeRequest).asByteArray()), containsString("401"));
+    }
 }
