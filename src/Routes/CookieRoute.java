@@ -4,8 +4,6 @@ import Server.HTTPRequest;
 import Server.Response;
 import Server.Storage;
 
-import java.util.Arrays;
-
 public class CookieRoute extends BaseRoute {
     private final Storage storage;
 

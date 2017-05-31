@@ -1,8 +1,8 @@
 package Tests;
 
 import Routes.PartialContentRoute;
-import Server.Storage;
 import Server.Response;
+import Server.Storage;
 import org.junit.Before;
 import org.junit.Test;
 

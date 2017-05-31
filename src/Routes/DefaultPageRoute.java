@@ -5,7 +5,6 @@ import Server.Response;
 import Server.Storage;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class DefaultPageRoute extends BaseRoute {
     private final Storage storage;

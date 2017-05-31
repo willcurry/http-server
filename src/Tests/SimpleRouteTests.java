@@ -80,7 +80,11 @@ public class SimpleRouteTests {
 
     @Test
     public void getOnEatCookieReturnsMmmmChocolate() throws IOException {
+        ArrayList<String> headers = new ArrayList<>();
+        headers.add("Cookie: type = chocolate");
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/eat_cookie", "");
+        fakeRequest.setHeaders(headers);
+        storage.saveData("type = chocolate");
         EatCookieRoute eatCookieRoute = new EatCookieRoute(storage);
         assertThat(TestUtil.makeString(eatCookieRoute.handleGET(fakeRequest).asByteArray()), containsString("mmmm chocolate"));
     }

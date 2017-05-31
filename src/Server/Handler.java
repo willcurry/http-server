@@ -23,8 +23,9 @@ public class Handler {
         routes.add(new ParametersRoute());
         routes.add(new PublicFilesRoute(storage));
         Storage cookieStorage = new Storage("/Users/willcurry/cob_spec/public/");
-        routes.add(new EatCookieRoute(storage));
-        routes.add(new CookieRoute(storage));
+        routes.add(new EatCookieRoute(cookieStorage));
+        routes.add(new CookieRoute(cookieStorage));
+        routes.add(new LogsRoute());
     }
 
     public Response handle(HTTPRequest request) throws IOException {
