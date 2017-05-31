@@ -1,11 +1,15 @@
 package Server.Routes;
 
 import Server.HTTPRequest;
+import Server.Logger;
 import Server.Response;
+import com.sun.javafx.tools.packager.Log;
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
+import com.sun.xml.internal.rngom.parse.host.Base;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class LogsRoute extends BaseRoute{
     @Override
@@ -17,25 +21,34 @@ public class LogsRoute extends BaseRoute{
     public Response handleGET(HTTPRequest request) throws IOException {
         Response response = new Response();
         response.setHTTPVersion("HTTP/1.1");
-        response.setStatusCode(401, "Unauthorized");
-        if (hasAuthorisationHeader(request) && authorisationPasses(request)) {
+        if (hasAuthorisationHeader(request) && authorisationPasses(getAuthCode(request))) {
             response.setStatusCode(200, "OK");
+            response.setContent(String.join("\n", Logger.getLogs()).getBytes());
+            response.setHeader("WWW-Authenticate: " + getAuthCode(request));
+        } else {
+            response.setStatusCode(401, "Unauthorized");
+            response.setHeader("WWW-Authenticate: Basic realm=\"User Visible Realm\"");
         }
         return response;
     }
 
-    private boolean authorisationPasses(HTTPRequest request) throws IOException {
+    private boolean authorisationPasses(String authCode) {
+        String authAsString = null;
+        try {
+            authAsString = new String(Base64.decode(authCode), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (Base64DecodingException e) {
+            e.printStackTrace();
+        }
+        return authAsString.equals("admin:hunter2");
+    }
+
+    private String getAuthCode(HTTPRequest request) throws IOException {
         String[] base64Auth = getAuthorisationHeader(request).split("\\s");
         com.sun.org.apache.xml.internal.security.Init.init();
-        if (!base64Auth[2].equals("")) {
-            try {
-                String authAsString = new String(Base64.decode(base64Auth[2]), "UTF-8");
-                return (authAsString.equals("admin:hunter2"));
-            } catch (Base64DecodingException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
+        return base64Auth[2];
+
     }
 
     private Boolean hasAuthorisationHeader(HTTPRequest request) throws IOException {
