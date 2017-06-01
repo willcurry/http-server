@@ -1,5 +1,7 @@
 package Tests;
 import Server.Handler;
+import Tests.FakeRequest;
+import Tests.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
 

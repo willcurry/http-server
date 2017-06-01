@@ -1,8 +1,10 @@
-package Tests;
+package Tests.RouteTests;
 
 import Server.Routes.PatchContentRoute;
 import Server.Response;
 import Server.Storage;
+import Tests.FakeRequest;
+import Tests.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +13,7 @@ import java.io.IOException;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class PatchContentTests {
+public class PatchContentRouteTests {
     private PatchContentRoute patchContent;
 
     @Before

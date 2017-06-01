@@ -1,7 +1,9 @@
-package Tests;
+package Tests.RouteTests;
 
 import Server.Logger;
 import Server.Routes.LogsRoute;
+import Tests.FakeRequest;
+import Tests.TestUtil;
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import org.junit.Test;
 

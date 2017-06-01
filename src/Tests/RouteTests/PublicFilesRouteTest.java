@@ -1,7 +1,9 @@
-package Tests;
+package Tests.RouteTests;
 
 import Server.Routes.PublicFilesRoute;
 import Server.Storage;
+import Tests.FakeRequest;
+import Tests.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
 

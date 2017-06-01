@@ -1,6 +1,8 @@
 package Tests;
 
 import Server.Logger;
+import Tests.FakeRequest;
+import Tests.TestUtil;
 import org.junit.Test;
 
 import java.io.IOException;
