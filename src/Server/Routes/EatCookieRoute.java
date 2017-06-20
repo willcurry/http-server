@@ -1,7 +1,7 @@
 package Server.Routes;
 
 import Server.HTTPRequest;
-import Server.Response;
+import Server.HTTPResponse;
 import Server.Storage;
 
 import java.io.IOException;
@@ -19,8 +19,8 @@ public class EatCookieRoute extends BaseRoute {
     }
 
     @Override
-    public Response handleGET(HTTPRequest request) throws IOException {
-        Response response = new Response();
+    public HTTPResponse handleGET(HTTPRequest request) throws IOException {
+        HTTPResponse response = new HTTPResponse();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
         if (getHeaderCookie(request).equals(storage.getData())) {

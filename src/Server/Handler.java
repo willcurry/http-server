@@ -1,9 +1,9 @@
 package Server;
 
-import Server.Routes.*;
+import Server.Routes.BaseRoute;
+import Server.Routes.FourOhFourRoute;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Handler {
     private final Router router;
@@ -13,7 +13,7 @@ public class Handler {
 
     }
 
-    public Response handle(HTTPRequest request) throws IOException {
+    public HTTPResponse handle(HTTPRequest request) throws IOException {
         for (BaseRoute route : router.allRoutes()) {
             if (route.appliesTo(request.getURI())) {
                 return findResponseForRequest(request, route);
@@ -22,7 +22,7 @@ public class Handler {
         return new FourOhFourRoute().handleGET(request);
     }
 
-    private Response findResponseForRequest(HTTPRequest request, BaseRoute route) throws IOException {
+    private HTTPResponse findResponseForRequest(HTTPRequest request, BaseRoute route) throws IOException {
         switch (request.getVerb()) {
             case "GET":
                 return route.handleGET(request);

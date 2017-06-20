@@ -1,13 +1,14 @@
 package Server.Routes;
 
 import Server.HTTPRequest;
-import Server.Response;
+import Server.HTTPResponse;
 import Server.Storage;
 
 import java.io.IOException;
 
 public class PartialContentRoute extends BaseRoute {
     private final Storage storage;
+    private HTTPResponse contentIfHasContent;
 
     public PartialContentRoute(Storage storage) {
         this.storage = storage;
@@ -19,27 +20,22 @@ public class PartialContentRoute extends BaseRoute {
     }
 
     @Override
-    public Response handleGET(HTTPRequest request) throws IOException {
-        Response response = new Response();
+    public HTTPResponse handleGET(HTTPRequest request) throws IOException {
+        HTTPResponse response = new HTTPResponse();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(206, "OK");
-         if (storage.fileHasData("partial_content.txt")) {
-             int[] range = findRange(request);
-             byte[] content = storage.readFileWithRange("partial_content.txt", range[0], range[1]);
-             response.setContent(content);
-         }
+        setContentIfHasContent(response, request);
         return response;
     }
 
     private int[] findRange(HTTPRequest request) throws IOException {
         for (String header : request.getHeaders()) {
-            if (header.contains("Range:")) return getRange(header);
+            if (header.contains("Range:")) return getRange(findRange(header));
         }
         return null;
     }
 
-    private int[] getRange(String header) throws IOException {
-        byte[] content = storage.readFile("partial_content.txt");
+    private int[] findRange(String header) {
         String rangeString = header.trim().split("=")[1];
         String[] ints = rangeString.split("-", 2);
         int[] range = new int[2];
@@ -47,11 +43,24 @@ public class PartialContentRoute extends BaseRoute {
         range[1] = -1;
         if (!ints[0].isEmpty()) range[0] = Integer.parseInt(ints[0]);
         if (!ints[1].isEmpty()) range[1] = Integer.parseInt(ints[1]) + 1;
-        if (range[1] <= 0) range[1] = content.length;
+        return range;
+    }
+
+    private int[] getRange(int[] range) throws IOException {
+        byte[] contentBytes = storage.readFile("partial_content.txt");
+        if (range[1] <= 0) range[1] = contentBytes.length;
         if (range[0] < 0) {
-            range[0] = content.length - range[1] + 1;
-            range[1] = content.length;
+            range[0] = contentBytes.length - range[1] + 1;
+            range[1] = contentBytes.length;
         }
         return range;
+    }
+
+    private void setContentIfHasContent(HTTPResponse response, HTTPRequest request) throws IOException {
+        if (storage.fileHasData("partial_content.txt")) {
+             int[] range = findRange(request);
+             byte[] content = storage.readFileWithRange("partial_content.txt", range[0], range[1]);
+             response.setContent(content);
+         }
     }
 }

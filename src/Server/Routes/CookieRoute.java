@@ -1,7 +1,7 @@
 package Server.Routes;
 
 import Server.HTTPRequest;
-import Server.Response;
+import Server.HTTPResponse;
 import Server.Storage;
 
 public class CookieRoute extends BaseRoute {
@@ -17,9 +17,9 @@ public class CookieRoute extends BaseRoute {
     }
 
     @Override
-    public Response handleGET(HTTPRequest request) {
+    public HTTPResponse handleGET(HTTPRequest request) {
         storage.saveData(formatQueryParameters(request.getURIParameters()));
-        Response response = new Response();
+        HTTPResponse response = new HTTPResponse();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
         response.setHeader("Set-Cookie: " + storage.getData());

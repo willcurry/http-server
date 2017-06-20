@@ -1,12 +1,10 @@
 package Server.Routes;
 
 import Server.HTTPRequest;
+import Server.HTTPResponse;
 import Server.Logger;
-import Server.Response;
-import com.sun.javafx.tools.packager.Log;
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
-import com.sun.xml.internal.rngom.parse.host.Base;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -18,8 +16,8 @@ public class LogsRoute extends BaseRoute{
     }
 
     @Override
-    public Response handleGET(HTTPRequest request) throws IOException {
-        Response response = new Response();
+    public HTTPResponse handleGET(HTTPRequest request) throws IOException {
+        HTTPResponse response = new HTTPResponse();
         response.setHTTPVersion("HTTP/1.1");
         if (hasAuthorisationHeader(request) && authorisationPasses(getAuthCode(request))) {
             response.setStatusCode(200, "OK");

@@ -1,7 +1,7 @@
 package Tests.RouteTests;
 
+import Server.HTTPResponse;
 import Server.Routes.FormRoute;
-import Server.Response;
 import Server.Storage;
 import Tests.FakeRequest;
 import Tests.TestUtil;
@@ -25,7 +25,7 @@ public class FormRouteTests {
 
     @Test
     public void formSavesDataWithPOST() throws IOException {
-        Response response = form.handlePOST(new FakeRequest("POST", "/form", "HTTP/1.1", "data=fatcat"));
+        HTTPResponse response = form.handlePOST(new FakeRequest("POST", "/form", "HTTP/1.1", "data=fatcat"));
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("HTTP/1.1 200 OK"));
         response = form.handleGET(new FakeRequest("GET", "/form", "HTTP/1.1", ""));
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("data=fatcat"));
@@ -33,7 +33,7 @@ public class FormRouteTests {
 
     @Test
     public void formSavesDataWithPUT() throws IOException {
-        Response response = form.handlePUT(new FakeRequest("PUT", "/form", "HTTP/1.1", "data=fatcat"));
+        HTTPResponse response = form.handlePUT(new FakeRequest("PUT", "/form", "HTTP/1.1", "data=fatcat"));
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("HTTP/1.1 200 OK"));
         response = form.handleGET(new FakeRequest("GET", "/form", "HTTP/1.1", ""));
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("data=fatcat"));
@@ -41,7 +41,7 @@ public class FormRouteTests {
 
     @Test
     public void formRemovesDataWithDELETE() throws IOException {
-        Response response = form.handlePUT(new FakeRequest("PUT", "/form", "HTTP/1.1", "data=fatcat"));
+        HTTPResponse response = form.handlePUT(new FakeRequest("PUT", "/form", "HTTP/1.1", "data=fatcat"));
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("HTTP/1.1 200 OK"));
         response = form.handleGET(new FakeRequest("GET", "/form", "HTTP/1.1", ""));
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("data=fatcat"));

@@ -24,7 +24,7 @@ public class ServerManager implements HTTPServerManager {
         this.executor = Executors.newFixedThreadPool(1);
     }
 
-    private Response getResponse(BufferedReader input) throws IOException {
+    private HTTPResponse getResponse(BufferedReader input) throws IOException {
         Request request = new Request(input);
         Logger.log(request);
         return handler.handle(request);
@@ -37,7 +37,7 @@ public class ServerManager implements HTTPServerManager {
                 clientSocket = serverSocket.accept();
                 input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 output = clientSocket.getOutputStream();
-                Response response = getResponse(input);
+                HTTPResponse response = getResponse(input);
                 output.write(response.asByteArray());
                 output.flush();
                 clientSocket.close();

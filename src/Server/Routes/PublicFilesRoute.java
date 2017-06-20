@@ -1,7 +1,7 @@
 package Server.Routes;
 
 import Server.HTTPRequest;
-import Server.Response;
+import Server.HTTPResponse;
 import Server.Storage;
 
 import java.io.IOException;
@@ -24,9 +24,9 @@ public class PublicFilesRoute extends BaseRoute {
     }
 
     @Override
-    public Response handleGET(HTTPRequest request) throws IOException {
+    public HTTPResponse handleGET(HTTPRequest request) throws IOException {
         String formattedURI = request.getURI().substring(1);
-        Response response = new Response();
+        HTTPResponse response = new HTTPResponse();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
         response.setContentType(findContentType(formattedURI));

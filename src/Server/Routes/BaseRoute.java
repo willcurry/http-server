@@ -1,13 +1,13 @@
 package Server.Routes;
 
 import Server.HTTPRequest;
-import Server.Response;
+import Server.HTTPResponse;
 
 import java.io.IOException;
 
 public class BaseRoute {
-    public Response MethodNotAllowed() {
-        Response response = new Response();
+    public HTTPResponse MethodNotAllowed() {
+        HTTPResponse response = new HTTPResponse();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(405, "Method Not Allowed");
         return response;
@@ -17,31 +17,31 @@ public class BaseRoute {
         return false;
     }
 
-    public Response handleGET(HTTPRequest request) throws IOException {
+    public HTTPResponse handleGET(HTTPRequest request) throws IOException {
         return MethodNotAllowed();
     }
 
-    public Response handlePOST(HTTPRequest request) throws IOException {
+    public HTTPResponse handlePOST(HTTPRequest request) throws IOException {
         return MethodNotAllowed();
     }
 
-    public Response handlePUT(HTTPRequest request) throws IOException {
+    public HTTPResponse handlePUT(HTTPRequest request) throws IOException {
         return MethodNotAllowed();
     }
 
-    public Response handleDELETE(HTTPRequest request) {
+    public HTTPResponse handleDELETE(HTTPRequest request) {
         return MethodNotAllowed();
     }
 
-    public Response handlePATCH(HTTPRequest request) throws IOException {
+    public HTTPResponse handlePATCH(HTTPRequest request) throws IOException {
         return MethodNotAllowed();
     }
 
-    public Response handleOPTIONS(HTTPRequest request) {
+    public HTTPResponse handleOPTIONS(HTTPRequest request) {
         return MethodNotAllowed();
     }
 
-    public Response handleHEAD(HTTPRequest request) {
+    public HTTPResponse handleHEAD(HTTPRequest request) {
         return MethodNotAllowed();
     }
 }

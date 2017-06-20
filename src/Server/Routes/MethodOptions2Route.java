@@ -1,7 +1,7 @@
 package Server.Routes;
 
 import Server.HTTPRequest;
-import Server.Response;
+import Server.HTTPResponse;
 
 public class MethodOptions2Route extends BaseRoute {
     @Override
@@ -10,16 +10,16 @@ public class MethodOptions2Route extends BaseRoute {
     }
 
     @Override
-    public Response handleGET(HTTPRequest request) {
-        Response response = new Response();
+    public HTTPResponse handleGET(HTTPRequest request) {
+        HTTPResponse response = new HTTPResponse();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
         return response;
     }
 
     @Override
-    public Response handleOPTIONS(HTTPRequest request) {
-        Response response = new Response();
+    public HTTPResponse handleOPTIONS(HTTPRequest request) {
+        HTTPResponse response = new HTTPResponse();
         response.setHTTPVersion("HTTP/1.1");
         response.setStatusCode(200, "OK");
         response.setHeader("ALLOW: GET,OPTIONS");

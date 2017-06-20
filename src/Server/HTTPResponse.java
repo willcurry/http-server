@@ -3,14 +3,14 @@ package Server;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class Response {
+public class HTTPResponse {
     private String version;
     private String statusCode;
     private String header;
     private byte[] content;
     private String contentType;
 
-    public Response() {
+    public HTTPResponse() {
         contentType = "text/plain";
     }
 

@@ -1,7 +1,7 @@
 package Tests.RouteTests;
 
+import Server.HTTPResponse;
 import Server.Routes.PatchContentRoute;
-import Server.Response;
 import Server.Storage;
 import Tests.FakeRequest;
 import Tests.TestUtil;
@@ -25,21 +25,21 @@ public class PatchContentRouteTests {
     @Test
     public void hasContentOfDefaultContent() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("GET", "/patch-content.txt", "");
-        Response response = patchContent.handleGET(fakeRequest);
+        HTTPResponse response = patchContent.handleGET(fakeRequest);
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("default content"));
     }
 
     @Test
     public void returns204NoContentAfterPatch() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("PATCH", "/patch-content.txt", "default content");
-        Response response = patchContent.handlePATCH(fakeRequest);
+        HTTPResponse response = patchContent.handlePATCH(fakeRequest);
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("204"));
     }
 
     @Test
     public void patchGetPatchGet() throws IOException {
         FakeRequest fakeRequest = TestUtil.createFakeRequest("PATCH", "/patch-content.txt", "hello");
-        Response response = patchContent.handlePATCH(fakeRequest);
+        HTTPResponse response = patchContent.handlePATCH(fakeRequest);
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("204"));
         fakeRequest = TestUtil.createFakeRequest("GET", "/patch-content.txt", "");
         response = patchContent.handleGET(fakeRequest);

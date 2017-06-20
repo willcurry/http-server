@@ -1,6 +1,5 @@
 package Tests;
 import Server.Handler;
-import Server.Router;
 import Server.Storage;
 import Tests.RouteTests.FakeRouter;
 import org.junit.Before;

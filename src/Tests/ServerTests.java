@@ -1,13 +1,13 @@
 package Tests;
 
+import Server.Router;
 import Server.Server;
+import Server.Storage;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import Server.Router;
-import Server.Storage;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;

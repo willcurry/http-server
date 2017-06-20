@@ -1,7 +1,6 @@
 package Tests;
 
 import Server.*;
-import Server.Routes.*;
 import Tests.RouteTests.FakeRouter;
 
 import java.io.BufferedReader;
@@ -30,7 +29,7 @@ public class ServerManagerMock implements HTTPServerManager {
         output.flush();
     }
 
-    private Response getResponse(BufferedReader input) throws IOException {
+    private HTTPResponse getResponse(BufferedReader input) throws IOException {
         Request request = new Request(input);
         Logger.log(request);
         return handler.handle(request);

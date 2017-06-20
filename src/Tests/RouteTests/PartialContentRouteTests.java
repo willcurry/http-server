@@ -1,7 +1,7 @@
 package Tests.RouteTests;
 
+import Server.HTTPResponse;
 import Server.Routes.PartialContentRoute;
-import Server.Response;
 import Server.Storage;
 import Tests.FakeRequest;
 import Tests.TestUtil;
@@ -36,7 +36,7 @@ public class PartialContentRouteTests {
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
-        Response response = partialContent.handleGET(fakeRequest);
+        HTTPResponse response = partialContent.handleGET(fakeRequest);
         assertThat(TestUtil.makeString(response.asByteArray()), is("HTTP/1.1 206 OK\nContent-Type: text/plain\nContent-Length: 5\n\nThis "));
     }
 
@@ -50,7 +50,7 @@ public class PartialContentRouteTests {
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
-        Response response = partialContent.handleGET(fakeRequest);
+        HTTPResponse response = partialContent.handleGET(fakeRequest);
         assertThat(TestUtil.makeString(response.asByteArray()), is("HTTP/1.1 206 OK\nContent-Type: text/plain\nContent-Length: 5\n\nThis "));
     }
 
@@ -64,7 +64,7 @@ public class PartialContentRouteTests {
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
-        Response response = partialContent.handleGET(fakeRequest);
+        HTTPResponse response = partialContent.handleGET(fakeRequest);
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("\n\n is a file that contains text to read part of in order to fulfill a 206.\n"));
     }
 
@@ -78,7 +78,7 @@ public class PartialContentRouteTests {
                 "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)\n" +
                 "Accept-Encoding: gzip,deflate";
         for (String header : headersString.split("\n")) headers.add(header);
-        Response response = partialContent.handleGET(fakeRequest);
+        HTTPResponse response = partialContent.handleGET(fakeRequest);
         assertThat(TestUtil.makeString(response.asByteArray()), containsString("\n\n 206.\n"));
     }
 }
