@@ -5,15 +5,15 @@ import Server.Routes.FourOhFourRoute;
 
 import java.io.IOException;
 
-public class Handler {
+public class ResponseFinder {
     private final Router router;
 
-    public Handler(Router router) {
+    public ResponseFinder(Router router) {
         this.router = router;
 
     }
 
-    public HTTPResponse handle(HTTPRequest request) throws IOException {
+    public HTTPResponse find(HTTPRequest request) throws IOException {
         for (BaseRoute route : router.allRoutes()) {
             if (route.appliesTo(request.getURI())) {
                 return findResponseForRequest(request, route);

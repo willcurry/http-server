@@ -1,24 +1,27 @@
 package Server;
 
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
-    private final int port;
-    private final HTTPServerManager serverManager;
     private final Router router;
+    private final ServerSocket socket;
     private Listener exitListener;
+    private ExecutorService executor;
 
-    public Server(int port, Listener exitListener, HTTPServerManager serverManager, Router router) {
+    public Server(Listener exitListener, Router router, ServerSocket socket) {
         this.exitListener = exitListener;
-        this.port = port;
-        this.serverManager = serverManager;
         this.router = router;
+        this.executor = Executors.newCachedThreadPool();
+        this.socket = socket;
     }
 
     public void run() throws IOException {
-        serverManager.setUp(port, router);
+        ResponseFinder responseFinder = new ResponseFinder(router);
         while (hasNotQuit()) {
-            serverManager.sendResponse();
+            executor.execute(new RequestHandler(socket.accept(), responseFinder));
         }
     }
 

@@ -1,16 +1,16 @@
 import Server.ExitListener;
 import Server.Server;
-import Server.ServerManager;
 import Server.Router;
 import Server.Storage;
 import Server.Routes.*;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         Router router = createRouterWithRoutes();
-        Server server = new Server(5000, new ExitListener(), new ServerManager(), router);
+        Server server = new Server(new ExitListener(), router, new ServerSocket(5000));
         server.run();
     }
 
