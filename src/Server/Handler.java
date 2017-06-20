@@ -6,30 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Handler {
-    private ArrayList<BaseRoute> routes;
+    private final Router router;
 
-    public Handler() {
-        Storage storage = new Storage("src/public/");
-        routes = new ArrayList<>();
-        routes.add(new DefaultPageRoute(storage));
-        routes.add(new FormRoute(storage));
-        routes.add(new MethodOptions2Route());
-        routes.add(new MethodOptionsRoute());
-        routes.add(new RedirectRoute());
-        routes.add(new PatchContentRoute(storage));
-        routes.add(new PartialContentRoute(storage));
-        routes.add(new TeaRoute());
-        routes.add(new CoffeeRoute());
-        routes.add(new ParametersRoute());
-        routes.add(new PublicFilesRoute(storage));
-        Storage cookieStorage = new Storage("src/public/");
-        routes.add(new EatCookieRoute(cookieStorage));
-        routes.add(new CookieRoute(cookieStorage));
-        routes.add(new LogsRoute());
+    public Handler(Router router) {
+        this.router = router;
+
     }
 
     public Response handle(HTTPRequest request) throws IOException {
-        for (BaseRoute route : routes) {
+        for (BaseRoute route : router.allRoutes()) {
             if (route.appliesTo(request.getURI())) {
                 return findResponseForRequest(request, route);
             }

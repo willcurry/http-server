@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import Server.Router;
+import Server.Storage;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
@@ -20,7 +22,8 @@ public class ServerTests {
         input = new BufferedReader(new StringReader(request));
         output = new OutputSpy();
         exitListener = new ExitListenerMock(input);
-        server = new Server(5000, exitListener, new ServerManagerMock(input, output));
+        Storage storage = new Storage("src/public_test/");
+        server = new Server(5000, exitListener, new ServerManagerMock(input, output), new Router(storage));
         server.run();
     }
 

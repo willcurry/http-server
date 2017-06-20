@@ -18,10 +18,10 @@ public class ServerManager implements HTTPServerManager {
     private ExecutorService executor;
 
     @Override
-    public void setUp(int port) throws IOException {
+    public void setUp(int port, Router router) throws IOException {
         this.serverSocket = new ServerSocket(port);
-        this.handler = new Handler();
-        this.executor = Executors.newFixedThreadPool(20);
+        this.handler = new Handler(router);
+        this.executor = Executors.newFixedThreadPool(1);
     }
 
     private Response getResponse(BufferedReader input) throws IOException {

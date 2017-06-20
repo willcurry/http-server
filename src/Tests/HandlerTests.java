@@ -1,7 +1,8 @@
 package Tests;
 import Server.Handler;
-import Tests.FakeRequest;
-import Tests.TestUtil;
+import Server.Router;
+import Server.Storage;
+import Tests.RouteTests.FakeRouter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,8 @@ public class HandlerTests {
 
     @Before
     public void before() {
-        handler = new Handler();
+        Storage storage = new Storage("src/public_test/");
+        handler = new Handler(new FakeRouter(storage));
     }
 
     @Test

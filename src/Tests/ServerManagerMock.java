@@ -1,6 +1,8 @@
 package Tests;
 
 import Server.*;
+import Server.Routes.*;
+import Tests.RouteTests.FakeRouter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,12 +16,12 @@ public class ServerManagerMock implements HTTPServerManager {
     public ServerManagerMock(BufferedReader input, OutputStream output) {
         this.input = input;
         this.output = output;
-        this.handler = new Handler();
+        Storage storage = new Storage("src/public_test/");
+        this.handler = new Handler(new FakeRouter(storage));
     }
 
     @Override
-    public void setUp(int port) throws IOException {
-
+    public void setUp(int port, Router router) throws IOException {
     }
 
     @Override
