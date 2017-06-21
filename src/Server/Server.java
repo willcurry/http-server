@@ -8,24 +8,18 @@ import java.util.concurrent.Executors;
 public class Server {
     private final Router router;
     private final ServerSocket socket;
-    private Listener exitListener;
     private ExecutorService executor;
 
-    public Server(Listener exitListener, Router router, ServerSocket socket) {
-        this.exitListener = exitListener;
+    public Server(Router router, int port) throws IOException {
         this.router = router;
         this.executor = Executors.newCachedThreadPool();
-        this.socket = socket;
+        this.socket = new ServerSocket(port);
     }
 
     public void run() throws IOException {
         ResponseFinder responseFinder = new ResponseFinder(router);
-        while (hasNotQuit()) {
+        while (true) {
             executor.execute(new RequestHandler(socket.accept(), responseFinder));
         }
-    }
-
-    private boolean hasNotQuit() {
-        return !exitListener.hasBeenTriggered();
     }
 }
